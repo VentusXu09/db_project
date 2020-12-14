@@ -13,6 +13,7 @@ import java.time.ZonedDateTime;
 @Setter
 public class Payment extends BaseModel{
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentMethod pay_method;
 
