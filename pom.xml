@@ -2,20 +2,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.example</groupId>
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java-version>1.8</java-version>
+
+		<javax.servlet.jsp-api.version>2.3.2-b01</javax.servlet.jsp-api.version>
+		<javax.el.version>2.2</javax.el.version>
+		<jstl.version>1.2</jstl.version>
+		<guava.version>20.0</guava.version>
+		<passay.version>1.0</passay.version>
+		<logstash-logback-encoder.version>4.8</logstash-logback-encoder.version>
+		<aerogear.version>1.0.0</aerogear.version>
+		<uap-java.version>1.4.0</uap-java.version>
+		<geoip2.version>2.12.0</geoip2.version>
+		<nekohtml.version>1.9.22</nekohtml.version>
 	</properties>
 
 	<dependencies>
@@ -66,6 +80,7 @@
 		<dependency>
 			<groupId>net.sourceforge.nekohtml</groupId>
 			<artifactId>nekohtml</artifactId>
+			<version>@{nekohtml.version}</version>
 		</dependency>
 
 		<dependency>
@@ -99,6 +114,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<scope>provided</scope>
@@ -115,6 +136,13 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.16</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<!-- Password Validation -->
+		<dependency>
+			<groupId>org.passay</groupId>
+			<artifactId>passay</artifactId>
+			<version>${passay.version}</version>
 		</dependency>
 
 	</dependencies>
