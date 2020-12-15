@@ -1,5 +1,6 @@
 package com.example.demo.domain.dto;
 
+import com.example.demo.domain.Corporation;
 import com.example.demo.validation.PasswordMatches;
 import com.example.demo.validation.ValidEmail;
 import com.example.demo.validation.ValidPassword;
@@ -32,6 +33,28 @@ public class UserDto {
     @NotNull
     @Size(min = 1, message = "{Size.userDto.email}")
     private String email;
+
+    @NotNull
+    private String phoneNo;
+
+    @NotNull
+    private String customerType;
+
+    /*
+        Individual Customers
+     */
+    private String driverLicence_no;
+
+    private String insuranceCompany;
+
+    private String insurancePolicyNo;
+
+    /*
+        Corporation Customers
+     */
+    private Long employeeId;
+
+    private Corporation corporation;
 
     private boolean isUsing2FA;
 
