@@ -1,10 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <style>
+        .password-verdict{ color:#000;}
+
+        .navbar-custom {padding: 25px 0;-webkit-transition: padding .3s;-moz-transition: padding .3s;transition: padding .3s;}
+        section {margin-top: 100px;height: 900px;}
+        @media (max-width: 767px) {  section {padding: 75px 0;}  section.first {padding-top: 75px;}  }
+        body {font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;overflow-x: hidden;}
+        header {text-align: center;background: #18BC9C;color: white;}
+        header .container {padding-top: 100px;padding-bottom: 50px;}
+
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!--    <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>-->
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
+    <title>Registration Form</title>
 </head>
 <body>
+
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom" style="background: #2C3E50">
+    <div class="container">
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand text-center titleFont" style="margin-left: 275px;font-size:30px;color: aliceblue">WELCOME TO BX RENTAL CAR COMPANY</a>
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h2 th:text="'Hello, ' + ${name} + '!'" style="font-size: 50px;margin-top: 30px"/>
+        <h2>Invoice</h2>
+        <hr>
+    </div>
+</div>
+
+
+
 
 </body>
 </html>

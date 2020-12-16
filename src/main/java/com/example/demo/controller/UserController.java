@@ -18,4 +18,5 @@ public class UserController {
         log.debug("Registering user account with information: {}", accountDto);
         return new GenericResponse("success");
     }
+
 }

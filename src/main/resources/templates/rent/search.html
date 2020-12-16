@@ -45,14 +45,14 @@
         <form id="form" data-parsley-validate="true" onsubmit="return false">
             <div class="row" style="margin-top: 10px;">
                 <div class="col-sm-6">
-                    <select  id="store" class="form-control" type="text" placeholder="Select Store Name" v-model="store"/>
-                    <option value="" selected="">Store Name</option>
+                    <select  id="store" class="form-control" type="text" placeholder="Select Store Name"/>
+                    <option value="" hidden>Select Store Name</option>
                     </select>
                 </div>
 
                 <div class="col-sm-6 input-group">
-                    <select id="carModel" class="form-control" type="text" placeholder="Select Car Model" v-model="carModel"/>
-                    <option value="" selected="">Car Model</option>
+                    <select id="type" class="form-control" type="text" placeholder="Select Car Model"/>
+                    <option value="" hidden="">Select Car Type</option>
                     </select>
 
                     <span class="input-group-btn">
@@ -66,4 +66,50 @@
 
 
 </body>
+
+
+
+<script th:inline="javascript">
+    var serverContext = [[@{/}]];
+
+    var temp;
+    const type = $('#type');
+
+    $(document).ready(function () {
+        $('form').submit(function(event) {
+            register(event);
+        });
+
+        $.get(serverContext + "api/vehicle/models", function (json) {
+            temp = json;
+            temp = JSON.parse(temp)
+
+            $.each(temp, function (id, name) {
+                $('#type').append("<option value="+ id+ ">" + name + "</option>");
+            });
+        })
+
+    });
+
+
+    function register(event){
+        var formData= $('form').serialize();
+        $.post(serverContext + "user/registration",formData ,function(data){
+
+            var i = data.message.indexOf("#");
+            var msg = data.message.substring(0,i);
+            var invoiceID = data.message.substring(i+1);
+            if(msg == "success"){
+                window.location.href = serverContext + "invoice"+invoiceID;
+            }
+
+        })
+    }
+
+
+
+
+
+</script>
+
 </html>

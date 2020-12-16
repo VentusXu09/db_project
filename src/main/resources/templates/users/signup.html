@@ -42,7 +42,7 @@
 
 <div class="container row align-items-center justify-content-center">
     <div class="block-center">
-        <div style="width: 60%;margin-left: 500px">
+        <div style="width: 60%;margin-left: 615px">
         <form action="/" method="POST" enctype="utf8" >
             <div class="form-group">
                 <label for="firstName" class="text-muted">First Name </label>
@@ -76,32 +76,46 @@
                 <label for="matchPassword" class="text-muted">Confirm Password </label>
                 <input id="matchPassword" class="form-control" name="matchingPassword" placeholder="Confirm Password" type="password" required="required" autocomplete="new-password"/>
                 <span class="fa fa-user form-control-feedback text-muted"></span>
-                <span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
+                <div class="form-group">
+                <span id="globalError" class="alert alert-danger col-sm-4" style="display:none;"></span>
+                </div>
+            </div>
+
+            <div id="errordiv" class="form-group" style="display: none;margin-top: 80px">
+                <span class="fa fa-user form-control-feedback text-muted"></span>
             </div>
 
             <div class="form-group">
-                <label for="phoneNo" class="text-muted">Phone Number </label>
+                <label for="phoneNo" class="text-muted" style="margin-top:auto">Phone Number </label>
                 <input id="phoneNo" class="form-control" name="phoneNo" placeholder="Phone Numbe" required="required"/>
                 <span class="fa fa-user form-control-feedback text-muted"></span>
             </div>
 
+
+
             <label  for="address" class="text-muted"> Location</label>
             <div class="form-group has-feedback">
                 <div id= "address" class="col-sm-8" style="padding: 0px 0px 0px 0px;width: 100%">
+
+                    <div class="row form-group" style="margin-top: 10px;margin-left: 1px;margin-right: 1px">
+                        <input id="street" class="form-control" name="street" type="street" placeholder="Street" required="required"/>
+                    </div>
+
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-sm-6">
-                            <input id="city" class="form-control" type="city" placeholder="Street" required="required" />
+                            <input id="city" class="form-control" name="city" type="city" placeholder="city" required="required" />
                         </div>
                         <div class="col-sm-6">
-                            <input id="state" class="form-control" type="state" placeholder="City" required="required">
+                            <input id="state" class="form-control" name="state" type="state" placeholder="City" required="required"/>
                         </div>
                     </div>
+
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-sm-6">
-                            <input id="country" class="form-control" type="country" placeholder="Country" required="required"/>
+                            <input id="country" class="form-control" name="country" type="country" placeholder="Country" required="required"/>
                         </div>
                         <div class="col-sm-6">
-                            <input id="zipcode" class="form-control" type="zipcode" placeholder="Zip Code" required="required"/>
+                            <input id="zipcode" class="form-control" name="zipcode" type="zipcode" placeholder="Zip Code" required="required"/>
                         </div>
                     </div>
                 </div>
@@ -110,9 +124,9 @@
 
             <!--  TODO: Should be select box   -->
             <div class="form-group" style="margin-top: 100px">
-                <label for="customerType"  class="text-muted">Corporation Name</label>
+                <label for="customerType"  class="text-muted">Customer Type</label>
                 <select id="customerType" class="form-control" type="customerType" placeholder="Customer Type" required="required" onchange="getUserType();">
-                    <option value="" selected= "" class="text-muted">Customer Type</option>
+                    <option value="" hidden> Customer Type </option>
                     <option value="1">Individual User</option>
                     <option value="2">Corporation User</option>
                 </select>
@@ -123,14 +137,14 @@
             <div id="corpdiv" style="display: none">
                 <div class="form-group">
                     <label for="employeeId" class="text-muted">Employee ID </label>
-                    <input id="employeeId" class="form-control" name="employeeId" placeholder="Employee ID">
+                    <input id="employeeId" class="form-control" name="employeeId" type="employeeId" placeholder="Employee ID">
                     <span class="fa fa-user form-control-feedback text-muted"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="corporationName"  class="text-muted">Corporation Name</label>
-                    <select id="corporationName" class="form-control" type="corporationName" placeholder="Corporation Name">
-                        <option value="" selected="">Corporation Name</option>
+                    <select id="corporationName" class="form-control" name="corporationName" type="corporationName" placeholder="Corporation Name">
+                        <option value="" hidden>Corporation Name</option>
                     </select>
                 </div>
             </div>
@@ -139,19 +153,19 @@
             <div id="indidiv" style="display: none">
                 <div class="form-group">
                     <label for="insuranceCompany" class="text-muted">Insurance Company </label>
-                    <input id="insuranceCompany" class="form-control" name="insuranceCompany" placeholder="Insurance Company">
+                    <input id="insuranceCompany" class="form-control" name="insuranceCompany" type="insuranceCompany" placeholder="Insurance Company">
                     <span class="fa fa-user form-control-feedback text-muted"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="insurancePolicyNo"  class="text-muted">Insurance Policy Number</label>
-                    <input id="insurancePolicyNo" class="form-control" name="insurancePolicyNo" placeholder="Insurance Policy Number">
+                    <input id="insurancePolicyNo" class="form-control" name="insurancePolicyNo" type="insurancePolicyNo" placeholder="Insurance Policy Number">
                     <span class="fa fa-user form-control-feedback text-muted"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="driverLicence_no"  class="text-muted">Driver Licence Number</label>
-                    <input id="driverLicence_no" class="form-control" name="driverLicence_no" placeholder="Driver Licence Number">
+                    <input id="driverLicence_no" class="form-control" name="driverLicence_no" type="driverLicence_no" placeholder="Driver Licence Number">
                     <span class="fa fa-user form-control-feedback text-muted"></span>
                 </div>
             </div>
@@ -175,6 +189,8 @@
             $('form').submit(function(event) {
                 register(event);
             });
+
+            const $corporationName = $('#corporationName');
             
             $.ajax({
             url:serverContext + "api/corporation_name",
@@ -183,12 +199,18 @@
             })
                 .done(function (json) {
                     temp = json;
+                    $.each(temp, function (name, id) {
+                        $('#corporationName').append("<option value="+ id+ ">" + name + "</option>");
+                    });
                 });
 
-            $.get(serverContext + "api/vehicle/models", function (json) {
-                temp = json;
-                temp = json;
-            })
+
+            //
+            //
+            // $.get(serverContext + "api/vehicle/models", function (json) {
+            //     temp = json;
+            //     temp = json;
+            // })
 
 
 
@@ -196,8 +218,11 @@
             $(":password").keyup(function(){
                 if($("#password").val() != $("#matchPassword").val()){
                     $("#globalError").show().html("Password not match");
+                    document.getElementById("errordiv").style.display = "block";
+
                 }else{
                     $("#globalError").html("").hide();
+                    document.getElementById("errordiv").style.display = "none";
                 }
             });
 
@@ -265,12 +290,12 @@
         var value=$("#customerType").val();
         /*alert(value);*/
         if(value=='1'){
-            document.getElementById("corpdiv").style.display = "block";
-            document.getElementById("indidiv").style.display = "none";
-        }
-        if(value=='2'){
             document.getElementById("corpdiv").style.display = "none";
             document.getElementById("indidiv").style.display = "block";
+        }
+        if(value=='2'){
+            document.getElementById("corpdiv").style.display = "block";
+            document.getElementById("indidiv").style.display = "none";
         }
     };
 
