@@ -87,7 +87,7 @@
 
             <div class="form-group">
                 <label for="phoneNo" class="text-muted" style="margin-top:auto">Phone Number </label>
-                <input id="phoneNo" class="form-control" name="phoneNo" placeholder="Phone Numbe" required="required"/>
+                <input id="phoneNo" class="form-control" name="phoneNo" placeholder="Phone Number" required="required"/>
                 <span class="fa fa-user form-control-feedback text-muted"></span>
             </div>
 
@@ -103,10 +103,10 @@
 
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-sm-6">
-                            <input id="city" class="form-control" name="city" type="city" placeholder="city" required="required" />
+                            <input id="city" class="form-control" name="city" type="city" placeholder="City" required="required" />
                         </div>
                         <div class="col-sm-6">
-                            <input id="state" class="form-control" name="state" type="state" placeholder="City" required="required"/>
+                            <input id="state" class="form-control" name="state" type="state" placeholder="State" required="required"/>
                         </div>
                     </div>
 
@@ -125,7 +125,7 @@
             <!--  TODO: Should be select box   -->
             <div class="form-group" style="margin-top: 100px">
                 <label for="customerType"  class="text-muted">Customer Type</label>
-                <select id="customerType" class="form-control" type="customerType" placeholder="Customer Type" required="required" onchange="getUserType();">
+                <select id="customerType" class="form-control" type="customerType" name="customerType" placeholder="Customer Type" required="required" onchange="getUserType();">
                     <option value="" hidden> Customer Type </option>
                     <option value="1">Individual User</option>
                     <option value="2">Corporation User</option>
