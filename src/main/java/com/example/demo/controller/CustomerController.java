@@ -18,7 +18,7 @@ public class CustomerController {
     @RequestMapping("login")
     public String signin(Principal principal, RedirectAttributes ra) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return principal == null ? "users/login" : "redirect:/";
+        return principal == null ? "users/login" : "redirect:search";
     }
 
     @RequestMapping("signup")

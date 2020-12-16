@@ -2,9 +2,15 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <style>
-        .password-verdict{
-            color:#000;
-        }
+        .password-verdict{ color:#000;}
+
+        .navbar-custom {padding: 25px 0;-webkit-transition: padding .3s;-moz-transition: padding .3s;transition: padding .3s;}
+        section {margin-top: 100px;height: 900px;}
+        @media (max-width: 767px) {  section {padding: 75px 0;}  section.first {padding-top: 75px;}  }
+        body {font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;overflow-x: hidden;}
+        header {text-align: center;background: #18BC9C;color: white;}
+        header .container {padding-top: 100px;padding-bottom: 50px;}
+
     </style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>
@@ -12,53 +18,150 @@
     <title>Registration Form</title>
 </head>
 <body>
-<div class="container">
-    <div >
-        <h1>form</h1>
-        <br/>
+
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom" style="background: #2C3E50">
+    <div class="container">
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand text-center titleFont" style="margin-left: 275px;font-size:30px;color: aliceblue">WELCOME TO BX RENTAL CAR COMPANY</a>
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h2 th:text="'Hello, ' + ${name} + '!'" style="font-size: 50px;margin-top: 30px"/>
+        <h2>Please Full Fill Blow Info</h2>
+        <hr>
+    </div>
+</div>
+
+
+<div class="container row align-items-center justify-content-center">
+    <div class="block-center">
+        <div style="width: 60%;margin-left: 500px">
         <form action="/" method="POST" enctype="utf8" >
-            <div class="form-group row" >
-                <label for="firstName" class="col-sm-3">First Name:</label>
-                <span class="col-sm-5"><input id="firstName" class="form-control" name="firstName" value="" required="required"/></span>
+            <div class="form-group">
+                <label for="firstName" class="text-muted">First Name </label>
+                <input id="firstName" class="form-control" name="firstName" placeholder="First Name" required="required"/>
+                <span class="fa fa-user form-control-feedback text-muted"></span>
                 <span id="firstNameError" class="alert alert-danger col-sm-4" style="display:none"></span>
-
             </div>
-            <div class="form-group row">
-                <label for="lastName" class="col-sm-3">Last Name:</label>
-                <span class="col-sm-5"><input id="lastName" class="form-control" name="lastName" value="" required="required"/></span>
+
+            <div class="form-group">
+                <label for="lastName" class="text-muted">Last Name </label>
+                <input id="lastName" class="form-control" name="lastName" placeholder="Last Name" required="required"/>
+                <span class="fa fa-user form-control-feedback text-muted"></span>
                 <span id="lastNameError" class="alert alert-danger col-sm-4" style="display:none"></span>
-
             </div>
-            <div class="form-group row">
-                <label for="email" class="col-sm-3" >Email:</label>
-                <span class="col-sm-5"><input id="email" type="email" class="form-control" name="email" value="" required="required"/></span>
+
+            <div class="form-group">
+                <label for="email" class="text-muted">Email Address </label>
+                <input id="email" type="email" class="form-control" name="email" placeholder="Email Address" required="required"/>
+                <span class="fa fa-user form-control-feedback text-muted"></span>
                 <span id="emailError" class="alert alert-danger col-sm-4" style="display:none"></span>
-
             </div>
-            <div class="form-group row">
-                <label for="password" class="col-sm-3">Password:</label>
-                <span class="col-sm-5"><input id="password" class="form-control" name="password" value="" type="password" required="required" autocomplete="new-password"/></span>
+
+            <div class="form-group">
+                <label for="password" class="text-muted">Password </label>
+                <input id="password" class="form-control" name="password" placeholder="Password" type="password" required="required" autocomplete="new-password"/>
+                <span class="fa fa-user form-control-feedback text-muted"></span>
                 <span id="passwordError" class="alert alert-danger col-sm-4" style="display:none"></span>
             </div>
-            <div class="form-group row">
-                <label for="matchPassword" class="col-sm-3">Confirm password</label>
-                <span class="col-sm-5"><input id="matchPassword" class="form-control" name="matchingPassword" value="" type="password" required="required" autocomplete="new-password"/></span>
+
+            <div class="form-group">
+                <label for="matchPassword" class="text-muted">Confirm Password </label>
+                <input id="matchPassword" class="form-control" name="matchingPassword" placeholder="Confirm Password" type="password" required="required" autocomplete="new-password"/>
+                <span class="fa fa-user form-control-feedback text-muted"></span>
                 <span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
             </div>
-            <!--  TODO: Should be select box   -->
-            <div class="form-group row">
-                <label for="customerType" class="col-sm-3">Customer Type:</label>
-                <span class="col-sm-5"><input id="customerType" class="form-control" name="customerType" value="" required="required"/></span>
-            </div>
-            <div class="form-group row">
-                <label for="phoneNo" class="col-sm-3">Phone Number:</label>
-                <span class="col-sm-5"><input id="phoneNo" class="form-control" name="phoneNo" value="" required="required"/></span>
+
+            <div class="form-group">
+                <label for="phoneNo" class="text-muted">Phone Number </label>
+                <input id="phoneNo" class="form-control" name="phoneNo" placeholder="Phone Numbe" required="required"/>
+                <span class="fa fa-user form-control-feedback text-muted"></span>
             </div>
 
-            <br/>
+            <label  for="address" class="text-muted"> Location</label>
+            <div class="form-group has-feedback">
+                <div id= "address" class="col-sm-8" style="padding: 0px 0px 0px 0px;width: 100%">
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-sm-6">
+                            <input id="city" class="form-control" type="city" placeholder="Street" required="required" />
+                        </div>
+                        <div class="col-sm-6">
+                            <input id="state" class="form-control" type="state" placeholder="City" required="required">
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-sm-6">
+                            <input id="country" class="form-control" type="country" placeholder="Country" required="required"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <input id="zipcode" class="form-control" type="zipcode" placeholder="Zip Code" required="required"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--  TODO: Should be select box   -->
+            <div class="form-group" style="margin-top: 100px">
+                <label for="customerType"  class="text-muted">Corporation Name</label>
+                <select id="customerType" class="form-control" type="customerType" placeholder="Customer Type" required="required" onchange="getUserType();">
+                    <option value="" selected= "" class="text-muted">Customer Type</option>
+                    <option value="1">Individual User</option>
+                    <option value="2">Corporation User</option>
+                </select>
+            </div>
+
+
+<!--            Display If Corp User Type-->
+            <div id="corpdiv" style="display: none">
+                <div class="form-group">
+                    <label for="employeeId" class="text-muted">Employee ID </label>
+                    <input id="employeeId" class="form-control" name="employeeId" placeholder="Employee ID">
+                    <span class="fa fa-user form-control-feedback text-muted"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="corporationName"  class="text-muted">Corporation Name</label>
+                    <select id="corporationName" class="form-control" type="corporationName" placeholder="Corporation Name">
+                        <option value="" selected="">Corporation Name</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--            Display If Indi User Type-->
+            <div id="indidiv" style="display: none">
+                <div class="form-group">
+                    <label for="insuranceCompany" class="text-muted">Insurance Company </label>
+                    <input id="insuranceCompany" class="form-control" name="insuranceCompany" placeholder="Insurance Company">
+                    <span class="fa fa-user form-control-feedback text-muted"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="insurancePolicyNo"  class="text-muted">Insurance Policy Number</label>
+                    <input id="insurancePolicyNo" class="form-control" name="insurancePolicyNo" placeholder="Insurance Policy Number">
+                    <span class="fa fa-user form-control-feedback text-muted"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="driverLicence_no"  class="text-muted">Driver Licence Number</label>
+                    <input id="driverLicence_no" class="form-control" name="driverLicence_no" placeholder="Driver Licence Number">
+                    <span class="fa fa-user form-control-feedback text-muted"></span>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        <br/>
+
+            <div class="row align-items-center justify-content-center">
+                <a href="/login" class="btn btn-block" >Already Have account?</a>
+            </div>
+    </div>
     </div>
 </div>
 </body>
@@ -66,36 +169,55 @@
 <script th:inline="javascript">
     var serverContext = [[@{/}]];
 
+        var temp;
+
         $(document).ready(function () {
             $('form').submit(function(event) {
                 register(event);
             });
+            
+            $.ajax({
+            url:serverContext + "api/corporation_name",
+            type: "GET",
+            dataType: "Json",
+            })
+                .done(function (json) {
+                    temp = json;
+                });
 
-            // $(":password").keyup(function(){
-            //     if($("#password").val() != $("#matchPassword").val()){
-            //         $("#globalError").show().html("Password not match");
-            //     }else{
-            //         $("#globalError").html("").hide();
-            //     }
-            // });
+            $.get(serverContext + "api/vehicle/models", function (json) {
+                temp = json;
+                temp = json;
+            })
 
-            // options = {
-            //     common: {minChar:8},
-            //     ui: {
-            //         showVerdictsInsideProgressBar:true,
-            //         showErrors:true,
-            //         errorMessages:{
-            //             wordLength: "Your password is too short",
-            //             wordNotEmail: "Do not use your email as your password",
-            //             wordSequences: "Your password contains sequences",
-            //             wordLowercase: "Use lower case characters",
-            //             wordUppercase: "Use upper case characters",
-            //             wordOneNumber: "Use numbers",
-            //             wordOneSpecialChar: "Use special characters"
-            //         }
-            //     }
-            // };
-            // $('#password').pwstrength(options);
+
+
+
+            $(":password").keyup(function(){
+                if($("#password").val() != $("#matchPassword").val()){
+                    $("#globalError").show().html("Password not match");
+                }else{
+                    $("#globalError").html("").hide();
+                }
+            });
+
+            options = {
+                common: {minChar:8},
+                ui: {
+                    showVerdictsInsideProgressBar:true,
+                    showErrors:true,
+                    errorMessages:{
+                        wordLength: "Your password is too short",
+                        wordNotEmail: "Do not use your email as your password",
+                        wordSequences: "Your password contains sequences",
+                        wordLowercase: "Use lower case characters",
+                        wordUppercase: "Use upper case characters",
+                        wordOneNumber: "Use numbers",
+                        wordOneSpecialChar: "Use special characters"
+                    }
+                }
+            };
+            $('#password').pwstrength(options);
         });
 
     function register(event){
@@ -109,7 +231,7 @@
         var formData= $('form').serialize();
         $.post(serverContext + "user/registration",formData ,function(data){
             if(data.message == "success"){
-                window.location.href = serverContext;
+                window.location.href = serverContext + "rentCar";
             }
 
         })
@@ -138,6 +260,19 @@
                 }
             });
     }
+
+    function getUserType(){
+        var value=$("#customerType").val();
+        /*alert(value);*/
+        if(value=='1'){
+            document.getElementById("corpdiv").style.display = "block";
+            document.getElementById("indidiv").style.display = "none";
+        }
+        if(value=='2'){
+            document.getElementById("corpdiv").style.display = "none";
+            document.getElementById("indidiv").style.display = "block";
+        }
+    };
 
 </script>
 

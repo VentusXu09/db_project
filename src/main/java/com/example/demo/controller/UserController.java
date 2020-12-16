@@ -16,7 +16,6 @@ public class UserController {
     @PostMapping("/user/registration")
     public GenericResponse registerUserAccount(@Valid final UserDto accountDto, final HttpServletRequest request) {
         log.debug("Registering user account with information: {}", accountDto);
-
         return new GenericResponse("success");
     }
 }

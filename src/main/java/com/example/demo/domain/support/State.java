@@ -90,6 +90,6 @@ public enum State {
 
     @Override
     public String toString() {
-        return name;
+        return abbreviation;
     }
 }

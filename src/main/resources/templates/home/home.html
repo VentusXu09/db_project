@@ -3,27 +3,53 @@
       layout:decorator="layout/bootstrap4">
 <head>
     <meta charset="UTF-8">
-</head>
-<body>
-<div layout:fragment="content">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+<!--    <link rel="stylesheet" th:style="@{/css/home.css}"/>-->
 
-    <div class="py-3 pt-md-5 pb-md-4 px-5 w-75 mx-auto text-center">
-        <img class="rounded-circle border"
-             style="width: 90px;border: 1px solid #dcdee0!important;padding:3px;background: #fefefe;"
-             src="/images/user.jpg"/>
-        <p class="text-muted mt-3">
-            Welcome to this site.</p>
-        <div class="mt-5 pt-5 pb-5 border-top">
-            <h4 class="text-muted">最新文章</h4>
+    <style>
+        .navbar-custom {padding: 25px 0;-webkit-transition: padding .3s;-moz-transition: padding .3s;transition: padding .3s;}
+        section {margin-top: 100px;height: 900px;}
+        @media (max-width: 767px) {  section {padding: 75px 0;}  section.first {padding-top: 75px;}  }
+        body {font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;overflow-x: hidden;}
+        header {text-align: center;background: #18BC9C;color: white;}
+        header .container {padding-top: 100px;padding-bottom: 50px;}
+    </style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom" style="background: #2C3E50">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand text-center titleFont" style="margin-left: 275px;font-size:30px;color: aliceblue">WELCOME TO BX RENTAL CAR COMPANY</a>
         </div>
     </div>
+</nav>
 
-    <div class="blog-main">
 
-        <nav class="blog-pagination text-center">
-            <a class="btn btn-outline-primary" href="/posts/archive">查看更多</a>
-        </nav>
+<header>
+    <div class="container">
+        <img src="images/car.jpg" alt="">
     </div>
+</header>
+
+
+<header>
+    <div class="container" style="padding-top: 10px;height: 300px;">
+        <form action="/login" method="GET" id="nameForm">
+            <div>
+                <p style=" font-size:20px;">Please Specify Your Name </p>
+                <input name="myName" id="nameField" style="color: black">
+                <button style="background:cornflowerblue">Enter!</button>
+            </div>
+        </form>
+    </div>
+</header>
 
 </div>
 </body>

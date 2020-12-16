@@ -52,9 +52,9 @@ public class UserDto {
     /*
         Corporation Customers
      */
-    private Long employeeId;
+    private String employeeId;
 
-    private Corporation corporation;
+    private String corporationName;
 
     private boolean isUsing2FA;
 
