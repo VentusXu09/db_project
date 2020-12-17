@@ -1,6 +1,5 @@
 package com.example.demo.domain.dto;
 
-import com.example.demo.domain.Corporation;
 import com.example.demo.validation.PasswordMatches;
 import com.example.demo.validation.ValidEmail;
 import com.example.demo.validation.ValidPassword;
@@ -59,6 +58,17 @@ public class UserDto {
     private boolean isUsing2FA;
 
     private Integer role;
+
+    /*
+        Address
+     */
+    private String state;
+
+    private String city;
+
+    private String street;
+
+    private String zipcode;
 
     @Override
     public String toString() {

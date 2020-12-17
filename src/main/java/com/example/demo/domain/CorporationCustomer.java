@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "CORPORATION_CUST")
@@ -22,5 +21,11 @@ public class CorporationCustomer extends Customer {
 
     public CorporationCustomer() {
         super();
+    }
+
+    public CorporationCustomer(Customer customer) {
+        super(customer.getFirst_name(),customer.getLast_name(),
+                customer.getEmail(), customer.getPhone_no(), customer.getAddress(),
+                customer.getPassword(), customer.getCoupons());
     }
 }
