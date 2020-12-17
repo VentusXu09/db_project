@@ -40,10 +40,9 @@
 <!--search bar-->
 <div class="row">
     <div class="col-lg-4 col-lg-offset-4">
-        <form id="form" data-parsley-validate="true" onsubmit="return false">
             <div class="row" style="margin-top: 10px;">
                 <div class="col-sm-6">
-                    <select  id="store" class="form-control" type="text" placeholder="Select Store Name"/>
+                    <select  id="office" class="form-control" type="text" placeholder="Select Store Name"/>
                     <option value="" hidden>Select Store Name</option>
                     </select>
                 </div>
@@ -52,13 +51,29 @@
                     <select id="type" class="form-control" type="text" placeholder="Select Car Model"/>
                     <option value="" hidden="">Select Car Type</option>
                     </select>
-
                     <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
-                </span>
+                        <button class="btn btn-default" id= "go" type="button">Go!</button>
+                    </span>
                 </div>
             </div>
-        </form>
+
+            <div class="form-group" id="searchResult">
+            </div>
+
+
+
+
+            <div class="form-group" style="display: none">
+                <label for="coupon"  class="text-muted">Payment Method</label>
+                <select id="coupon" class="form-control" type="coupon" name="coupon" >
+                    <option value="" hidden> Choose A Valid Coupon </option>
+                    <option value="1">3%</option>
+                    <option value="2">5%</option>
+                    <option value="3">5.5%</option>
+                    <option value="4">7%</option>
+                </select>
+            </div>
+
     </div>
 </div>
 
@@ -75,9 +90,10 @@
 
     $(document).ready(function () {
         $('form').submit(function(event) {
-            register(event);
+            send(event);
         });
 
+        <!--  TODO: get return value (office loaction and car Type for search) -->
         $.get(serverContext + "api/vehicle/models", function (json) {
             temp = json;
             temp = JSON.parse(temp)
@@ -87,26 +103,75 @@
             });
         })
 
+        $.get(serverContext + "api/officeLocation", function (json) {
+            temp = json;
+            temp = JSON.parse(temp)
+
+            $.each(temp, function (id, name) {
+                $('#type').append("<option value="+ id+ ">" + name + "</option>");
+            });
+        })
+
+
+        $(".go").on("click",function () {
+
+            var officeId = $(this).attr("office");//
+            var carType = $(this).attr("type");//
+
+            $.ajax({
+                type:'get',
+                url:"/xxxx",
+                data:{officeId:officeId,carType:carType},
+                success:function (json) {
+                    temp = json;
+                    temp = JSON.parse(temp)
+
+                    $.each(temp, function (id, name){
+                        // $("#"+id).show().html(name);
+                        $('#searchResult').append(
+                            "<div className= 'form-group' >" +
+                            "<label for=" + " + id + "  + "className='text-muted'>" + id + "</label>" +
+                            "<span id=" + " + id + " + "class='alert alert-danger col-sm-4'>"+ name + "</span>" +
+                            "</div>"
+                        );
+                    });
+                }
+            });
+
+    });
+
+    <!--  TODO: send search condition -->
+    var id = $(this).attr("search");//
+    $.ajax({
+        type:'get',
+        url:"/payment",
+        data:{id:id},
+        success:function (json) {
+
+            temp = json;
+            temp = JSON.parse(temp)
+
+            $.each(temp, function (id, name) {
+                $("#amount").show().html(name);
+            });
+        }
+    });
     });
 
 
-    function register(event){
+    function send(event){
         var formData= $('form').serialize();
-        $.post(serverContext + "user/registration",formData ,function(data){
+        $.post(serverContext + "xxxx",formData ,function(data){
 
             var i = data.message.indexOf("#");
             var msg = data.message.substring(0,i);
             var invoiceID = data.message.substring(i+1);
+
             if(msg == "success"){
                 window.location.href = serverContext + "?invoice="+invoiceID;
             }
-
         })
     }
-
-
-
-
 
 </script>
 

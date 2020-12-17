@@ -13,7 +13,6 @@
     </style>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!--    <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>-->
     <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
     <title>Registration Form</title>
 </head>
@@ -24,9 +23,8 @@
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom" style="background: #2C3E50">
     <div class="container">
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-            </button>
+            <div sec:authorize="isAuthenticated()">
+                Authenticated as <span id="username" sec:authentication="name"></span></div>
             <a class="navbar-brand text-center titleFont" style="margin-left: 275px;font-size:30px;color: aliceblue">WELCOME TO BX RENTAL CAR COMPANY</a>
         </div>
     </div>
@@ -34,12 +32,120 @@
 
 <div class="row">
     <div class="col-lg-12 text-center">
-        <h2 th:text="'Hello, ' + ${name} + '!'" style="font-size: 50px;margin-top: 30px"/>
+        <h2 th:text="'Hello!'" style="font-size: 50px;margin-top: 30px"/>
         <h2>Invoice</h2>
         <hr>
     </div>
 </div>
 
 
+
+<div class="container row align-items-center justify-content-center">
+    <div class="block-center">
+        <div id= "thisPage" style="width: 60%;margin-left: 625px">
+
+<!--            <div class="form-group">-->
+<!--                <label for="firstName" class="text-muted">First Name</label>-->
+<!--                <span id="firstName" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="lastName" class="text-muted">Last Name</label>-->
+<!--                <span id="lastName" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="address" class="text-muted">Address</label>-->
+<!--                <span id="address" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="amount" class="text-muted">Payment Amount</label>-->
+<!--                <span id="amount" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+
+<!--            <div class="form-group">-->
+<!--                <label for="type" class="text-muted">Car Type</label>-->
+<!--                <span id="type" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="rent_charge" class="text-muted">Rent Charge</label>-->
+<!--                <span id="rent_charge" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="extra_charge" class="text-muted">Extra Charge</label>-->
+<!--                <span id="extra_charge" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="make" class="text-muted">Car Make</label>-->
+<!--                <span id="make" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="model" class="text-muted">Car Model</label>-->
+<!--                <span id="model" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="year" class="text-muted">Car Year</label>-->
+<!--                <span id="year" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="vin" class="text-muted">Car VIN</label>-->
+<!--                <span id="vin" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="license_plate_no" class="text-muted">License Plate No</label>-->
+<!--                <span id="license_plate_no" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--            </div>-->
+
+        </div>
+    </div>
+</div>
+
+
 </body>
+
+<script th:inline="javascript">
+    var serverContext = [[@{/}]];
+    var temp;
+
+    $(document).ready(function () {
+
+        <!--  TODO: get return value (user first/last name, address, payment amount, car Info) -->
+        var id = $(this).attr("username");//
+        $.ajax({
+            type:'get',
+            url:"/inovice",
+            data:{id:id},
+            success:function (json) {
+
+
+                temp = json;
+                temp = JSON.parse(temp)
+
+                $.each(temp, function (id, name){
+                    // $("#"+id).show().html(name);
+                    $('#thisPage').append(
+                        "<div className= 'form-group' >" +
+                        "<label for=" + " + id + "  + "className='text-muted'>" + id + "</label>" +
+                        "<span id=" + " + id + " + "class='alert alert-danger col-sm-4'>"+ name + "</span>" +
+                        "</div>"
+                    );
+                });
+            }
+        });
+    });
+
+</script>
+
+
+
+
 </html>
