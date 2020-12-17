@@ -1,12 +1,17 @@
 package com.example.demo.domain.support;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 @Embeddable
+@Getter
+@Setter
 public class RentalServiceId implements Serializable {
     @Column(name = "pickup_date")
     private ZonedDateTime pickup_date;
