@@ -17,7 +17,7 @@ public class OfficeLocationController {
     @Autowired
     private OfficeLocationRepository officeLocationRepository;
 
-    @GetMapping(value = "/officeLocation")
+    @GetMapping(value = "/api/officeLocation")
     public String getOfficeLocation() {
         List<OfficeLocation> locations = officeLocationRepository.findAll();
 

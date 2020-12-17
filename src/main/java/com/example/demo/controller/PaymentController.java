@@ -65,7 +65,9 @@ public class PaymentController {
 
     @PostMapping()
     public GenericResponse submitPaymentDetail(@Valid PaymentDto paymentDto) {
-        Invoice invoice = invoiceRepository.getOne(Long.valueOf(paymentDto.getInvoiceId()));
+        Customer customer = customerRepository.findByEmail(paymentDto.getCustomerName());
+        RentalService rentalService = rentalServiceRepository.findByCustomer(customer.getId());
+        Invoice invoice = rentalService.getInvoice();
         final Payment payment = new Payment();
         payment.setPay_amount(invoice.getAmount());
         payment.setPay_date(ZonedDateTime.now());

@@ -52,8 +52,8 @@ public class VehicleController {
 
     @PostMapping("/models")
     public String getVehicleModelByIds(@Valid VehicleDto vehicleDto) {
-        OfficeLocation office = officeLocationRepository.getOne(Long.valueOf(vehicleDto.getOffice_id()));
-        VehicleClass type = vehicleClassRepository.getOne(Long.valueOf(vehicleDto.getVehicle_id()));
+        OfficeLocation office = officeLocationRepository.getOne(Long.valueOf(vehicleDto.getOfficeId()));
+        VehicleClass type = vehicleClassRepository.getOne(Long.valueOf(vehicleDto.getTypeId()));
         List<Vehicle> res = vehicleRepository.findByOfficeLocationAndVehicleClass(office, type);
 
         Map<String, Map<String, String>> models = new HashMap<>();

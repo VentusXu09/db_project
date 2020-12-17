@@ -1,13 +1,141 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <style>
+        .password-verdict{ color:#000;}
+
+        .navbar-custom {padding: 25px 0;-webkit-transition: padding .3s;-moz-transition: padding .3s;transition: padding .3s;}
+        section {margin-top: 100px;height: 900px;}
+        @media (max-width: 767px) {  section {padding: 75px 0;}  section.first {padding-top: 75px;}  }
+        body {font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;overflow-x: hidden;}
+        header {text-align: center;background: #18BC9C;color: white;}
+        header .container {padding-top: 100px;padding-bottom: 50px;}
+
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
+    <title>Registration Form</title>
 </head>
 <body>
 
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom" style="background: #2C3E50">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <div sec:authorize="isAuthenticated()">
+                Authenticated as <span id="username" sec:authentication="name"></span></div>
+            <a class="navbar-brand text-center titleFont" style="margin-left: 275px;font-size:30px;color: aliceblue">WELCOME TO BX RENTAL CAR COMPANY</a>
+        </div>
+    </div>
+</nav>
 
 
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h2 th:text="'Hello, ' + ${name} + '!'" style="font-size: 50px;margin-top: 30px"/>
+        <h2>Please Full Fill Blow Info</h2>
+        <hr>
+    </div>
+</div>
 
+<div class="container row align-items-center justify-content-center">
+    <div class="block-center">
+        <div style="width: 60%;margin-left: 625px">
+
+            <div class="form-group">
+                <label for="amount" class="text-muted">Total Amount</label>
+                <span id="amount" class="alert alert-danger col-sm-4" style="display:none;" th:default="0"onchange="getAmount()"></span>
+            </div>
+
+            <form action="/" method="POST" enctype="utf8" >
+<!--                <div class="form-group">-->
+<!--                    <label for="discount"  class="text-muted">Coupon</label>-->
+<!--                    <select id="discount" class="form-control" type="discount" name="discount" onchange="getAmount()">-->
+<!--                    <option value="" hidden> Choose A Valid Coupon </option>-->
+<!--                    </select>-->
+<!--                </div>-->
+
+                <div class="form-group">
+                    <label for="pay_method"  class="text-muted">Payment Method</label>
+                    <select id="pay_method" class="form-control" type="pay_method" name="payMethod" required="required">
+                        <option value="" hidden> Choose Payment Method </option>
+                        <option value="1">Credit</option>
+                        <option value="2">Debit</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="card_num" class="text-muted">First Name </label>
+                    <input id="card_num" class="form-control" name="cardNum" placeholder="card Number" required="required"/>
+                    <span class="fa fa-user form-control-feedback text-muted"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <hr>
+                        <label for="pay_amount" class="text-muted">Total Amount</label>
+                        <span id="pay_amount" name="pay_amount" style="display: none"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
+
+<script th:inline="javascript">
+    var serverContext = [[@{/}]];
+
+    var temp;
+    const discount = $('#discount');
+
+    $(document).ready(function () {
+        $('form').submit(function(event) {
+            send(event);
+        });
+
+
+        <!--  TODO: get return value (amount) -->
+        var id = $(this).attr("username");//
+        $.ajax({
+            type:'get',
+            url:"/payment",
+            data:{id:id},
+            success:function (json) {
+
+                temp = json;
+                temp = JSON.parse(temp)
+
+                $.each(temp, function (id, name) {
+                    $("#amount").show().html(name);
+                });
+            }
+        });
+    });
+
+
+    function send(event){
+        var formData= $('form').serialize();
+        var id = $(this).attr("username");//
+
+        formData["customerName"]  = id;
+        $.post(serverContext + "/payment",formData ,function(data){
+            var i = data.message.indexOf("#");
+            var msg = data.message.substring(0,i);
+            var invoiceID = data.message.substring(i+1);
+            if(msg == "success"){
+                window.location.href = serverContext + "?invoice="+invoiceID;
+            }
+        })
+    }
+
+
+
+
+</script>
+
+
+
+
 </html>

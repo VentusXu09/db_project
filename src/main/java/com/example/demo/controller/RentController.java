@@ -37,4 +37,22 @@ public class RentController {
         return "users/choose";
     }
 
+    @RequestMapping("payment")
+    public String payment(final HttpServletRequest request, Model model) {
+        Locale locale = request.getLocale();
+        model.addAttribute("lang", locale.getLanguage());
+        return "rent/payment";
+    }
+
+    @RequestMapping("rent")
+    public String invoice(final HttpServletRequest request, Model model) {
+        Locale locale = request.getLocale();
+        model.addAttribute("lang", locale.getLanguage());
+        return "rent/invoice";
+    }
+
+
+
+
+
 }

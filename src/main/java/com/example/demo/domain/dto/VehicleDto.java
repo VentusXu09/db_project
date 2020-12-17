@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class VehicleDto {
     @NotNull
-    private String vehicle_id;
+    private String typeId;
 
     @NotNull
-    private String office_id;
+    private String officeId;
 }

@@ -13,6 +13,10 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!--    <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>-->
     <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
+    <link rel="stylesheet" href="js/daterangepicker.min.css">
+    <script type="text/javascript" src="moment.min.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.daterangepicker.min.js"></script>
     <title>Registration Form</title>
 </head>
 <body>
@@ -40,25 +44,61 @@
 <!--search bar-->
 <div class="row">
     <div class="col-lg-4 col-lg-offset-4">
-        <form id="form" data-parsley-validate="true" onsubmit="return false">
-            <div class="row" style="margin-top: 10px;">
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+                <span id="date_range"></span>
+            </div>
+
+
+            <div class="col-sm-6 input-group">
+                <select id="dropoffDate" name="dropoffDate" class="form-control" type="text" placeholder="Select Drop Off Date"/>
+                <option value="" hidden="">Select Drop Off Datee</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 input-group">
+                <select id="dropoffLocation" name="dropoffLocation" class="form-control" type="text" placeholder="Select Drop Off Location"/>
+                <option value="" hidden="">Select Drop Off Location</option>
+                </select>
+            </div>
+
+        </div>
+
+
+        <div class="row" style="margin-top: 10px;">
                 <div class="col-sm-6">
-                    <select  id="store" class="form-control" type="text" placeholder="Select Store Name"/>
+                    <select  id="office" name ="pickupLocation" class="form-control" type="text" placeholder="Select Store Name"/>
                     <option value="" hidden>Select Store Name</option>
                     </select>
                 </div>
 
+
                 <div class="col-sm-6 input-group">
-                    <select id="type" class="form-control" type="text" placeholder="Select Car Model"/>
+                    <select id="type" name="type" class="form-control" type="text" placeholder="Select Car Model"/>
                     <option value="" hidden="">Select Car Type</option>
                     </select>
-
                     <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
-                </span>
+                        <button class="btn btn-default" id= "go" type="button">Go!</button>
+                    </span>
                 </div>
             </div>
-        </form>
+
+            <div class="form-group" id="searchResult">
+            </div>
+
+
+            <div class="form-group" style="display: none">
+                <label for="coupon"  class="text-muted">Payment Method</label>
+                <select id="coupon" class="form-control" type="coupon" name="coupon" >
+                    <option value="" hidden> Choose A Valid Coupon </option>
+                    <option value="1">3%</option>
+                    <option value="2">5%</option>
+                    <option value="3">5.5%</option>
+                    <option value="4">7%</option>
+                </select>
+            </div>
+
     </div>
 </div>
 
@@ -75,9 +115,22 @@
 
     $(document).ready(function () {
         $('form').submit(function(event) {
-            register(event);
+            send(event);
         });
 
+        $(dom).data('#date_range').dateRangePicker(
+            {
+                getValue: function() {
+                    return this.innerHTML;
+                },
+                setValue: function(s)
+                {
+                    this.innerHTML = s;
+                }
+            }
+        );
+
+        <!--  TODO: get return value (office loaction and car Type for search) -->
         $.get(serverContext + "api/vehicle/models", function (json) {
             temp = json;
             temp = JSON.parse(temp)
@@ -87,26 +140,76 @@
             });
         })
 
+        $.get(serverContext + "api/officeLocation", function (json) {
+            temp = json;
+            temp = JSON.parse(temp)
+
+            $.each(temp, function (id, name) {
+                $('#office').append("<option value="+ id+ ">" + name + "</option>");
+                $('#dropoffLocation').append("<option value="+ id+ ">" + name + "</option>");
+                $('#office').append("<option value="+ id+ ">" + name + "</option>");
+            });
+        })
+
+
+        $(".go").on("click",function () {
+
+            var officeId = $(this).attr("office");//
+            var carType = $(this).attr("type");//
+
+            $.ajax({
+                type:'post',
+                url:"/mopdels",
+                data:{officeId:officeId,carType:carType},
+                success:function (json) {
+                    temp = json;
+                    temp = JSON.parse(temp)
+
+                    $.each(temp, function (id, name){
+                        // $("#"+id).show().html(name);
+                        $('#searchResult').append(
+                            "<div className= 'form-group' >" +
+                            "<label for=" + " + id + "  + "className='text-muted'>" + id + "</label>" +
+                            "<span id=" + " + id + " + "class='alert alert-danger col-sm-4'>"+ name + "</span>" +
+                            "</div>"
+                        );
+                    });
+                }
+            });
+
     });
 
+    <!--  TODO: send search condition -->
+    var id = $(this).attr("search");//
+    $.ajax({
+        type:'get',
+        url:"/payment",
+        data:{id:id},
+        success:function (json) {
 
-    function register(event){
+            temp = json;
+            temp = JSON.parse(temp)
+
+            $.each(temp, function (id, name) {
+                $("#amount").show().html(name);
+            });
+        }
+    });
+    });
+
+    function send(event){
         var formData= $('form').serialize();
-        $.post(serverContext + "user/registration",formData ,function(data){
+        $.post(serverContext + "rent",formData ,function(data){
 
             var i = data.message.indexOf("#");
             var msg = data.message.substring(0,i);
             var invoiceID = data.message.substring(i+1);
-            if(msg == "success"){
-                window.location.href = serverContext + "?invoice="+invoiceID;
-            }
 
+            if(msg == "success"){
+                window.location.href = serverContext + "rent?invoice="+invoiceID;
+            }
         })
     }
-
-
-
-
 
 </script>
 
