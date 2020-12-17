@@ -9,7 +9,7 @@ public class PaymentDto {
 
     private String customerName;
 
-    private String paymMethod;
+    private String payMethod;
 
     private String cardNum;
 }

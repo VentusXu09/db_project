@@ -33,15 +33,15 @@ public class PaymentController {
     @Autowired
     private PaymentRepository paymentRepository;
 
-    @GetMapping("")
-    public String getPaymentDetail(@RequestParam("id") String id) {
+    @GetMapping("/{id}")
+    public String getPaymentDetail(@PathVariable("id") String id) {
         Random r = new Random();
         Double rangeMin = Double.valueOf(30);
         Double rangeMax = Double.valueOf(60);
 
         Customer customer = customerRepository.findByEmail(id);
 
-        RentalService rentalService = rentalServiceRepository.findByCustomer(customer.getId());
+        RentalService rentalService = rentalServiceRepository.findFirstByCustomer(customer);
         Vehicle vehicle = rentalService.getVehicle();
         VehicleClass type = vehicle.getVehicleClass();
         Invoice invoice = rentalService.getInvoice();
@@ -54,6 +54,8 @@ public class PaymentController {
         Double amount = (end - start) *  type.getRent_charge();
         invoice.setAmount(amount);
 
+        invoiceRepository.save(invoice);
+
         Map<String, String> map = new HashMap<>();
         map.put("amount", String.valueOf(amount));
 
@@ -65,16 +67,17 @@ public class PaymentController {
     @PostMapping()
     public GenericResponse submitPaymentDetail(@Valid PaymentDto paymentDto) {
         Customer customer = customerRepository.findByEmail(paymentDto.getCustomerName());
-        RentalService rentalService = rentalServiceRepository.findByCustomer(customer.getId());
+        RentalService rentalService = rentalServiceRepository.findFirstByCustomer(customer);
         Invoice invoice = rentalService.getInvoice();
         final Payment payment = new Payment();
         payment.setPay_amount(invoice.getAmount());
+        payment.setCard_num(Long.valueOf(paymentDto.getCardNum()));
         payment.setPay_date(ZonedDateTime.now());
-        payment.setPay_method(paymentDto.getPaymMethod());
+        payment.setPay_method(paymentDto.getPayMethod());
         payment.setInvoice(invoice);
 
         final Payment saved = paymentRepository.save(payment);
 
-        return new GenericResponse("success");
+        return new GenericResponse("success#"+invoice.getId());
     }
 }

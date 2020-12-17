@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <style>
@@ -29,9 +29,8 @@
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom" style="background: #2C3E50">
     <div class="container">
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-            </button>
+            <div sec:authorize="isAuthenticated()">
+                Authenticated as <span id="username" sec:authentication="name"></span></div>
             <a class="navbar-brand text-center titleFont" style="margin-left: 275px;font-size:30px;color: aliceblue">WELCOME TO BX RENTAL CAR COMPANY</a>
         </div>
     </div>
@@ -48,25 +47,29 @@
 <!--search bar-->
 <div class="row">
     <div class="col-lg-4 col-lg-offset-4">
+        <form id="form">
 
         <div class="row" style="margin-top: 10px;">
-            <form id="form">
-            <div class="col-sm-6">
+            <div class="col-sm-6" STYLE="display: none">
                 <span id="date_range"></span>
             </div>
 
-            <div class="col-sm-6 input-group">
-                <select id="dropoffDate" name="dropoffDate" class="form-control" type="text" placeholder="Select Drop Off Date"/>
-                <option value="" hidden="">Select Drop Off Datee</option>
+            <div class="col-sm-4 ">
+                <select id="dropoffDate" name="dropoffDate" class="form-control" type="text" />
+                <option value="" hidden="">Select Drop Off Date</option>
+                </select>
+            </div>
+            <div class="col-sm-4 ">
+                <select id="pickupDate" name="pickupDate" class="form-control" type="text"/>
+                <option value="" hidden="">Select Pick Up Date</option>
                 </select>
             </div>
 
-            <div class="col-sm-6 input-group">
-                <select id="dropoffLocation" name="dropoffLocation" class="form-control" type="text" placeholder="Select Drop Off Location"/>
+            <div class="col-sm-4 ">
+                <select id="dropoffLocation" name="dropoffLocation" class="form-control" type="text"/>
                 <option value="" hidden="">Select Drop Off Location</option>
                 </select>
             </div>
-
         </div>
 
 
@@ -90,8 +93,6 @@
 
             <div class="form-group" id="searchResult">
                 <table id="table">
-
-
                 </table>
             </div>
 
@@ -107,6 +108,7 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
 
+
         </form>
     </div>
 </div>
@@ -118,23 +120,27 @@
     var serverContext = [[@{/}]];
 
     var temp;
+    var carID;
     const type = $('#type');
 
     $(document).ready(function () {
         $('form').submit(function (event) {
             send(event);
         });
+        //
+        // $('#date_range').dateRangePicker(
+        //     {
+        //         getValue: function () {
+        //             return this.innerHTML;
+        //         },
+        //         setValue: function (s) {
+        //             this.innerHTML = s;
+        //         }
+        //     }
+        // );
 
-        $('#date_range').dateRangePicker(
-            {
-                getValue: function () {
-                    return this.innerHTML;
-                },
-                setValue: function (s) {
-                    this.innerHTML = s;
-                }
-            }
-        );
+
+
 
 
         <!--  TODO: get return value (office loaction and car Type for search) -->
@@ -154,8 +160,15 @@
             $.each(temp, function (id, name) {
                 $('#office').append("<option value=" + id + ">" + name + "</option>");
                 $('#dropoffLocation').append("<option value=" + id + ">" + name + "</option>");
-                $('#office').append("<option value=" + id + ">" + name + "</option>");
             });
+
+            for (let month = 1; month < 12; month++) {
+                for (let day = 1; day < 30; day++) {
+                    $('#dropoffDate').append("<option value=" + day + ">" + day +"/"+ month+ "/2020" + "</option>");
+                    $('#pickupDate').append("<option value=" + day + ">" + day +"/"+ month+ "/2020" +  "</option>");
+                }
+            }
+
         })
 
 
@@ -176,48 +189,51 @@
 
                     $.each(temp, function (key, value) {
 
-                        $('#table').append("<tr id=" + "+ key + " + ">");
+                        $('#table').append("<tr id=" + key  + " class=cars >");
                         $.each(value, function (id, name) {
-                            $('#table').append("<td>" + name + "</td>");
+                            $('#'+key).append("<td>" + name + "</td>");
                         });
                         $('#table').append("</tr>");
                     });
                     document.getElementById("couponDiv").style.display = "block";
+
+                    $(".cars").click(function(){
+                        $(this).addClass('selected');
+                        $(this).css('background-color', '#ff0000');
+                        carID = $(this).attr('id');
+
+                    });
+
                 }
             });
         };
+
+
     });
-
-        //selected search
-    $("#table tr").click(function(){
-        $(this).addClass('selected').siblings().removeClass('selected');
-        $(this).siblings().css("color","#FDFDFD");
-        $(this).style.color = "#FF0303";
-        // var value=$(this).find('td:first').html();
-        // alert(value);
-    });
-
-
-    // $('.ok').on('click', function(e){
-    //     alert($("#table tr.selected td:first").html());
-    // });
-
 
     <!--  TODO: send back data -->
 
     function send(event){
-        var formData= $('form').serialize();
+        event.preventDefault();
+        var formData= $('form').serialize()
+        var username = $(this).attr("username").innerText
 
-        var id = $("#table tr.selected").id;
-        formData["vehicleId"]  = id;
 
-        $.post(serverContext + "rent",formData ,function(data){
+        formData += "&vehicleId="+ carID;
+        formData += "&customerName="+ username;
+
+
+        // formData["vehicleId"]  = carID;
+        // formData["customerName"]  = username;
+
+
+        $.post(serverContext + "rental",formData ,function(data){
             var i = data.message.indexOf("#");
             var msg = data.message.substring(0,i);
             var invoiceID = data.message.substring(i+1);
 
             if(msg == "success"){
-                window.location.href = serverContext + "rental?invoice="+invoiceID;
+                window.location.href = serverContext + "invoice/"+invoiceID;
             }
         })
     }

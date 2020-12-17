@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <style>
@@ -43,11 +43,6 @@
     <div class="block-center">
         <div style="width: 60%;margin-left: 625px">
 
-<!--            <div class="form-group">-->
-<!--                <label for="amount" class="text-muted">Total Amount</label>-->
-<!--                <span id="amount" class="alert alert-danger col-sm-4" style="display:none;" th:default="0"onchange="getAmount()"></span>-->
-<!--            </div>-->
-
             <form action="/" method="POST" enctype="utf8" >
 
                 <div class="form-group">
@@ -79,26 +74,23 @@
 </div>
 </body>
 
+
+
 <script th:inline="javascript">
     var serverContext = [[@{/}]];
-
-    var temp;
-    const discount = $('#discount');
+    var id = $(this).attr("username").innerText;
 
     $(document).ready(function () {
         $('form').submit(function(event) {
             send(event);
         });
 
-
         <!--  TODO: get return value (amount) -->
-        var id = $(this).attr("username");//
         $.ajax({
             type:'get',
-            url:"/payment",
-            data:{id:id},
-            success:function (json) {
+            url:"/payment/"+id,
 
+            success:function (json) {
                 temp = json;
                 temp = JSON.parse(temp)
 
@@ -110,17 +102,35 @@
     });
 
 
-    function send(event){
-        var formData= $('form').serialize();
-        var id = $(this).attr("username");//
+    // function send(event){
+    //     var formData= $('form').serialize();
+    //     var id = $(this).attr("username").innerText//
+    //
+    //     formData["customerName"]  = id;
+    //     $.post(serverContext + "/payment",formData ,function(data){
+    //         var i = data.message.indexOf("#");
+    //         var msg = data.message.substring(0,i);
+    //         var invoiceID = data.message.substring(i+1);
+    //         if(msg == "success"){
+    //             window.location.href = serverContext + "?invoice="+invoiceID;
+    //         }
+    //     })
+    // }
 
-        formData["customerName"]  = id;
-        $.post(serverContext + "/payment",formData ,function(data){
+    function send(event){
+        event.preventDefault();
+        var formData= $('form').serialize()
+        var username = $(this).attr("username").innerText
+
+        formData += "&customerName="+ username;
+
+        $.post(serverContext + "payment",formData ,function(data){
             var i = data.message.indexOf("#");
             var msg = data.message.substring(0,i);
             var invoiceID = data.message.substring(i+1);
+
             if(msg == "success"){
-                window.location.href = serverContext + "?invoice="+invoiceID;
+                window.location.href = serverContext + "invoice/"+invoiceID;
             }
         })
     }
@@ -129,8 +139,4 @@
 
 
 </script>
-
-
-
-
 </html>

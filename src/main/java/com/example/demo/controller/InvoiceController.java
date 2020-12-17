@@ -27,11 +27,22 @@ public class InvoiceController{
     @GetMapping
     @RequestMapping("/{id}")
     public String getInvoiceDetails(@PathVariable(value = "id") String invoiceId) {
-        Invoice invoice  = invoiceRepository.getOne(Long.valueOf(invoiceId));
+        Invoice invoice  = invoiceRepository.findOneById(Long.valueOf(invoiceId));
         RentalService service = rentalServiceRepository.getRentalServiceByInvoiceEquals(invoice);
-        Payment payment = invoice.getPayments().get(0);
 
         Map<String, String> map = new HashMap<>();
+
+        Payment payment = null;
+        if (invoice.getPayments() == null || invoice.getPayments().size() == 0) {
+            map.put("pay_method", " ");
+            map.put("pay_date", " ");
+            map.put("card_num", "");
+        } else {
+            payment = invoice.getPayments().get(0);
+            map.put("pay_method", payment.getPay_method());
+            map.put("pay_date", payment.getPay_date().toString());
+            map.put("card_num", String.valueOf(payment.getCard_num()));
+        }
 
         map.put("id", invoiceId);
         map.put("start_odometer", service.getStart_odometer().toString());
@@ -41,9 +52,6 @@ public class InvoiceController{
         map.put("dropoff_loc", service.getDropoff().toString());
         map.put("pickup_date", service.getRentalServiceid().getPickup_date().toString());
         map.put("dropoff_date", service.getDropoff_date().toString());
-        map.put("pay_method", payment.getPay_method().toString());
-        map.put("card_num", String.valueOf(payment.getCard_num()));
-        map.put("pay_date", payment.getPay_date().toString());
 
         String json = new Gson().toJson(map);
 

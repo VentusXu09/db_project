@@ -27,6 +27,7 @@ public class RentController {
     public String invoice(final HttpServletRequest request, Model model, @PathVariable String id) {
         Locale locale = request.getLocale();
         model.addAttribute("lang", locale.getLanguage());
+        model.addAttribute("invoice_id", id);
         return "rent/invoice";
     }
 
@@ -37,7 +38,7 @@ public class RentController {
         return "users/choose";
     }
 
-    @RequestMapping("payment")
+    @RequestMapping("payments")
     public String payment(final HttpServletRequest request, Model model) {
         Locale locale = request.getLocale();
         model.addAttribute("lang", locale.getLanguage());
@@ -50,9 +51,5 @@ public class RentController {
         model.addAttribute("lang", locale.getLanguage());
         return "rent/invoice";
     }
-
-
-
-
 
 }

@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
@@ -32,8 +32,9 @@
 
 <div class="row">
     <div class="col-lg-12 text-center">
-        <h2 th:text="'Hello!'" style="font-size: 50px;margin-top: 30px"/>
-        <h2>Invoice</h2>
+        <h2 th:text="'Hello!'" style="font-size: 50px;margin-top: 50px"/>
+        <h2 id="invoiceNumber" th:text="'Invoice:' + ${invoice_id}">Invoice</h2>
+
         <hr>
     </div>
 </div>
@@ -42,76 +43,12 @@
 
 <div class="container row align-items-center justify-content-center">
     <div class="block-center">
-        <div id= "thisPage" style="width: 60%;margin-left: 625px">
+        <div id= "thisPage" style="width: 60%;margin-left: 700px">
 
-<!--            <div class="form-group">-->
-<!--                <label for="firstName" class="text-muted">First Name</label>-->
-<!--                <span id="firstName" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="lastName" class="text-muted">Last Name</label>-->
-<!--                <span id="lastName" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="address" class="text-muted">Address</label>-->
-<!--                <span id="address" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="amount" class="text-muted">Payment Amount</label>-->
-<!--                <span id="amount" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-
-<!--            <div class="form-group">-->
-<!--                <label for="type" class="text-muted">Car Type</label>-->
-<!--                <span id="type" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="rent_charge" class="text-muted">Rent Charge</label>-->
-<!--                <span id="rent_charge" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="extra_charge" class="text-muted">Extra Charge</label>-->
-<!--                <span id="extra_charge" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="make" class="text-muted">Car Make</label>-->
-<!--                <span id="make" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="model" class="text-muted">Car Model</label>-->
-<!--                <span id="model" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="year" class="text-muted">Car Year</label>-->
-<!--                <span id="year" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="vin" class="text-muted">Car VIN</label>-->
-<!--                <span id="vin" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--                <label for="license_plate_no" class="text-muted">License Plate No</label>-->
-<!--                <span id="license_plate_no" class="col-sm-4" style="display:none;"></span>-->
-<!--            </div>-->
         </div>
 
-        <div class="container" style="padding-top: 10px;height: 300px;">
-            <form action="/choose">
-                <div>
-                    <button style="background:cornflowerblue">Return</button>
-                </div>
-            </form>
+        <div class="row align-items-center justify-content-center " style="margin-left: 100px">
+            <a href="/choose" class="btn btn-block" >return</a>
         </div>
 
     </div>
@@ -131,23 +68,25 @@
         // const queryString = "wd=git%20hub%20merge&rsv_spt=1&rsv_iqid=0xecb9585d000c5982&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&rqlang=cn&tn=baiduhome_pg&rsv_dl=tb&oq=git%2520hub%2520pull&rsv_enter=1&rsv_btype=t&inputT=580&rsv_t=8ed9MEGTFyQv1c5pBcO8v5N33Xj2sraBbKXH3JEefPQyembltS6b0AnHDzHRcq4bnza1&rsv_sug3=29&rsv_sug1=4&rsv_sug7=100&rsv_pq=a486cd65000ca9be&rsv_sug2=0&rsv_sug4=1180"
         const urlParams = new URLSearchParams(queryString);
 
-        var id = urlParams.get("invoice");
+        // var id = urlParams.get("invoice");
+
+        var text = document.getElementById("invoiceNumber").innerHTML
+        var id = text.substring(text.indexOf(":")+1)
+
         $.ajax({
-            type:'get',
-            url:"/inovice",
-            data:{id:id},
+            type:'GET',
+            url:"/invoices/" + id,
+
+
             success:function (json) {
-
-
                 temp = json;
                 temp = JSON.parse(temp)
 
                 $.each(temp, function (id, name){
-                    // $("#"+id).show().html(name);
                     $('#thisPage').append(
                         "<div className= 'form-group' >" +
-                        "<label for=" + " + id + "  + "className='text-muted'>" + id + "</label>" +
-                        "<span id=" + " + id + " + "class='col-sm-4'>"+ name + "</span>" +
+                        "<label for=" + id  + "className='text-muted'>" + id + "</label>" +
+                        "<span id=" +  id + "class='col-sm-4'>"+":      " + name + "</span>" +
                         "</div>"
                     );
                 });
