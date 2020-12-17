@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.*;
 import com.example.demo.domain.dto.PaymentDto;
-import com.example.demo.domain.support.PaymentMethod;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.repository.InvoiceRepository;
 import com.example.demo.repository.PaymentRepository;
@@ -71,7 +70,7 @@ public class PaymentController {
         final Payment payment = new Payment();
         payment.setPay_amount(invoice.getAmount());
         payment.setPay_date(ZonedDateTime.now());
-        payment.setPay_method(PaymentMethod.valueOf(paymentDto.getPaymMethod()));
+        payment.setPay_method(paymentDto.getPaymMethod());
         payment.setInvoice(invoice);
 
         final Payment saved = paymentRepository.save(payment);

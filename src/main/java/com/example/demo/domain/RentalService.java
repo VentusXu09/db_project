@@ -40,7 +40,7 @@ public class RentalService{
     @Column(nullable = false)
     private Double daily_limit;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "dropoff_date")
     private ZonedDateTime dropoff_date;
 
     @ManyToOne

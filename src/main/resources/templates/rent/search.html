@@ -13,9 +13,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!--    <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>-->
     <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
-    <link rel="stylesheet" href="js/daterangepicker.min.css">
-    <script type="text/javascript" src="moment.min.js"></script>
-    <script type="text/javascript" src="jquery.min.js"></script>
+    <link rel="stylesheet" href="css/daterangepicker.min.css">
+    <script type="text/javascript" src="js/moment.min.js"></script>
     <script type="text/javascript" src="js/jquery.daterangepicker.min.js"></script>
     <title>Registration Form</title>
 </head>
@@ -79,12 +78,13 @@
                     <option value="" hidden="">Select Car Type</option>
                     </select>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" id= "go" type="button">Go!</button>
+                        <button class="btn btn-default" id= "go" name="go" type="button">Go!</button>
                     </span>
                 </div>
             </div>
 
             <div class="form-group" id="searchResult">
+                <ul id="table"></ul>
             </div>
 
 
@@ -114,17 +114,16 @@
     const type = $('#type');
 
     $(document).ready(function () {
-        $('form').submit(function(event) {
+        $('form').submit(function (event) {
             send(event);
         });
 
-        $(dom).data('#date_range').dateRangePicker(
+        $('#date_range').dateRangePicker(
             {
-                getValue: function() {
+                getValue: function () {
                     return this.innerHTML;
                 },
-                setValue: function(s)
-                {
+                setValue: function (s) {
                     this.innerHTML = s;
                 }
             }
@@ -136,7 +135,7 @@
             temp = JSON.parse(temp)
 
             $.each(temp, function (id, name) {
-                $('#type').append("<option value="+ id+ ">" + name + "</option>");
+                $('#type').append("<option value=" + id + ">" + name + "</option>");
             });
         })
 
@@ -145,71 +144,63 @@
             temp = JSON.parse(temp)
 
             $.each(temp, function (id, name) {
-                $('#office').append("<option value="+ id+ ">" + name + "</option>");
-                $('#dropoffLocation').append("<option value="+ id+ ">" + name + "</option>");
-                $('#office').append("<option value="+ id+ ">" + name + "</option>");
+                $('#office').append("<option value=" + id + ">" + name + "</option>");
+                $('#dropoffLocation').append("<option value=" + id + ">" + name + "</option>");
+                $('#office').append("<option value=" + id + ">" + name + "</option>");
             });
         })
 
 
-        $(".go").on("click",function () {
+        document.getElementById("go").onclick = function () {
 
-            var officeId = $(this).attr("office");//
-            var carType = $(this).attr("type");//
+            var officeId = document.getElementById("office").value
+            var carType =document.getElementById("type").value
 
             $.ajax({
-                type:'post',
-                url:"/mopdels",
-                data:{officeId:officeId,carType:carType},
-                success:function (json) {
+                type: 'post',
+                url: "/api/vehicle/models",
+                data: {"officeId": officeId, "typeId": carType},
+                success: function (json) {
                     temp = json;
                     temp = JSON.parse(temp)
 
-                    $.each(temp, function (id, name){
+                    $.each(temp, function (key, value) {
                         // $("#"+id).show().html(name);
-                        $('#searchResult').append(
-                            "<div className= 'form-group' >" +
-                            "<label for=" + " + id + "  + "className='text-muted'>" + id + "</label>" +
-                            "<span id=" + " + id + " + "class='alert alert-danger col-sm-4'>"+ name + "</span>" +
-                            "</div>"
-                        );
+                        var s = "";
+                        $.each(value, function (id, name) {
+                            s += name + "\t";
+                            //
+                            // $('#searchResult').append(
+                            //     "<li>" +
+                            //     "<div className= 'form-group' >" +
+                            //     "<label for=" + " + id + " + "className='text-muted'>" + id + "</label>" +
+                            //     "<span id=" + " + id + " + "class='alert alert-danger col-sm-4'>" + name + "</span>" +
+                            //     "</div>"
+                            // );
+                        });
+                        var table = document.getElementById("table");
+                        table.append
                     });
                 }
-            });
+                })
+            };
 
-    });
 
-    <!--  TODO: send search condition -->
-    var id = $(this).attr("search");//
-    $.ajax({
-        type:'get',
-        url:"/payment",
-        data:{id:id},
-        success:function (json) {
 
-            temp = json;
-            temp = JSON.parse(temp)
+        function send(event) {
+            var formData = $('form').serialize();
+            $.post(serverContext + "rent", formData, function (data) {
 
-            $.each(temp, function (id, name) {
-                $("#amount").show().html(name);
-            });
+                var i = data.message.indexOf("#");
+                var msg = data.message.substring(0, i);
+                var invoiceID = data.message.substring(i + 1);
+
+                if (msg == "success") {
+                    window.location.href = serverContext + "rent?invoice=" + invoiceID;
+                }
+            })
         }
     });
-    });
-
-    function send(event){
-        var formData= $('form').serialize();
-        $.post(serverContext + "rent",formData ,function(data){
-
-            var i = data.message.indexOf("#");
-            var msg = data.message.substring(0,i);
-            var invoiceID = data.message.substring(i+1);
-
-            if(msg == "success"){
-                window.location.href = serverContext + "rent?invoice="+invoiceID;
-            }
-        })
-    }
 
 </script>
 

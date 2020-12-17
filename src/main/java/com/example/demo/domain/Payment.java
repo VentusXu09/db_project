@@ -1,6 +1,5 @@
 package com.example.demo.domain;
 
-import com.example.demo.domain.support.PaymentMethod;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,9 +12,9 @@ import java.time.ZonedDateTime;
 @Setter
 public class Payment extends BaseModel{
 
-    @Enumerated(EnumType.STRING)
+
     @Column(nullable = false)
-    private PaymentMethod pay_method;
+    private String pay_method;
 
     @Column(nullable = false)
     private Long card_num;

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "INVOICE")
@@ -22,4 +23,8 @@ public class Invoice extends BaseModel{
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice", cascade = CascadeType.REMOVE)
     private List<Payment> payments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "invoice")
+    private Set<RentalService> rentalServices;
+
 }

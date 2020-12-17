@@ -22,10 +22,10 @@ public class RentalServiceId implements Serializable {
     @Column(name = "customer_id")
     private Long customer;
 
-    @Column(name = "pickup_location")
+    @Column(name = "pickup_id")
     private Long pickup;
 
-    @Column(name = "dropoff_location")
+    @Column(name = "dropoff_id")
     private Long dropoff;
 
     public RentalServiceId() {

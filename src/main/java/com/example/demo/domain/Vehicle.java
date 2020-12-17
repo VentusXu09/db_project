@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "vehicle")
@@ -33,4 +34,8 @@ public class Vehicle extends BaseModel{
     @ManyToOne()
     @JoinColumn(name = "loc_id", nullable = false)
     private OfficeLocation officeLocation;
+
+    @OneToMany(mappedBy = "vehicle")
+    private Set<RentalService> rentalServices;
+
 }

@@ -40,6 +40,9 @@ public class Customer extends BaseModel{
     @ManyToMany(mappedBy = "customers")
     private Set<Coupon> coupons = new HashSet<>();
 
+    @OneToMany(mappedBy = "customer")
+    private Set<RentalService> rentalServices;
+
     public Customer(String first_name, String last_name, String email, Long phone_no, Address address, String password, Set<Coupon> coupons) {
         this.first_name = first_name;
         this.last_name = last_name;
