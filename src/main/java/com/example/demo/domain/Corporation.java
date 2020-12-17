@@ -13,8 +13,8 @@ import java.util.List;
 @Setter
 public class Corporation extends BaseModel {
 
-    @Column(nullable = false)
-    private String corp_name;
+    @Column(name = "corp_name", nullable = false)
+    private String corpName;
 
     @Column(nullable = false)
     private String registration_no;

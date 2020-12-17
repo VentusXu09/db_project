@@ -127,8 +127,8 @@
                 <label for="customerType"  class="text-muted">Customer Type</label>
                 <select id="customerType" class="form-control" type="customerType" name="customerType" placeholder="Customer Type" required="required" onchange="getUserType();">
                     <option value="" hidden> Customer Type </option>
-                    <option value="1">Individual User</option>
-                    <option value="2">Corporation User</option>
+                    <option value="I">Individual User</option>
+                    <option value="C">Corporation User</option>
                 </select>
             </div>
 
@@ -289,11 +289,11 @@
     function getUserType(){
         var value=$("#customerType").val();
         /*alert(value);*/
-        if(value=='1'){
+        if(value=='I'){
             document.getElementById("corpdiv").style.display = "none";
             document.getElementById("indidiv").style.display = "block";
         }
-        if(value=='2'){
+        if(value=='C'){
             document.getElementById("corpdiv").style.display = "block";
             document.getElementById("indidiv").style.display = "none";
         }
