@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("invoice")
+@RequestMapping("invoices")
 public class InvoiceController{
     @Autowired
     private InvoiceRepository invoiceRepository;
@@ -28,7 +28,7 @@ public class InvoiceController{
     @RequestMapping("/{id}")
     public String getInvoiceDetails(@PathVariable(value = "id") String invoiceId) {
         Invoice invoice  = invoiceRepository.getOne(Long.valueOf(invoiceId));
-        RentalService service = rentalServiceRepository.getRentalServiceByInvoiceEquals(Long.valueOf(invoiceId));
+        RentalService service = rentalServiceRepository.getRentalServiceByInvoiceEquals(invoice);
         Payment payment = invoice.getPayments().get(0);
 
         Map<String, String> map = new HashMap<>();

@@ -11,24 +11,24 @@ import java.time.ZonedDateTime;
 @Table(name = "RENTAL_SERVICE")
 @Getter
 @Setter
-public class RentalService extends BaseModel{
+public class RentalService{
     @EmbeddedId
     private RentalServiceId rentalServiceid;
 
     @ManyToOne
-    @JoinColumn(name = "vehicle_id", referencedColumnName = "id", nullable = false)
+    @MapsId("vehicle_id")
     private Vehicle vehicle;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    @MapsId("customer_id")
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "pickup_location", referencedColumnName = "id", nullable = false)
+    @MapsId("pickup_location")
     private OfficeLocation pickup;
 
     @ManyToOne
-    @JoinColumn(name = "dropoff_location", referencedColumnName = "id", nullable = false)
+    @MapsId("dropoff_location")
     private OfficeLocation dropoff;
 
     @Column(nullable = true)
@@ -40,7 +40,7 @@ public class RentalService extends BaseModel{
     @Column(nullable = false)
     private Double daily_limit;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "dropoff_date")
     private ZonedDateTime dropoff_date;
 
     @ManyToOne

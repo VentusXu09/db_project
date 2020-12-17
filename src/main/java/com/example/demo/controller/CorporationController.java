@@ -16,7 +16,7 @@ public class CorporationController {
     @Autowired
     private CorporationRepository corporationRepository;
 
-    @GetMapping(value = "/corporation_name")
+    @GetMapping(value = "api/corporation_name")
     public String getCorporations() {
         List<Corporation> res = corporationRepository.findAll();
 

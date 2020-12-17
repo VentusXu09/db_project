@@ -31,4 +31,7 @@ public class Coupon extends BaseModel{
             inverseJoinColumns = {@JoinColumn(name = "coupon_id")})
     private Set<Customer> customers = new HashSet<>();
 
+    @OneToMany(mappedBy = "coupon")
+    private Set<RentalService> rentalServices;
+
 }

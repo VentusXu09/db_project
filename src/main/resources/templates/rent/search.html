@@ -18,9 +18,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!--    <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>-->
     <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
-    <link rel="stylesheet" href="js/daterangepicker.min.css">
-    <script type="text/javascript" src="moment.min.js"></script>
-    <script type="text/javascript" src="jquery.min.js"></script>
+    <link rel="stylesheet" href="css/daterangepicker.min.css">
+    <script type="text/javascript" src="js/moment.min.js"></script>
     <script type="text/javascript" src="js/jquery.daterangepicker.min.js"></script>
     <title>Registration Form</title>
 </head>
@@ -84,13 +83,14 @@
                     <option value="" hidden="">Select Car Type</option>
                     </select>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" id= "go" type="button">Go!</button>
+                        <button class="btn btn-default" id= "go" name="go" type="button">Go!</button>
                     </span>
                 </div>
             </div>
 
             <div class="form-group" id="searchResult">
                 <table id="table">
+
 
                 </table>
             </div>
@@ -121,17 +121,16 @@
     const type = $('#type');
 
     $(document).ready(function () {
-        $('form').submit(function(event) {
+        $('form').submit(function (event) {
             send(event);
         });
 
-        $(dom).data('#date_range').dateRangePicker(
+        $('#date_range').dateRangePicker(
             {
-                getValue: function() {
+                getValue: function () {
                     return this.innerHTML;
                 },
-                setValue: function(s)
-                {
+                setValue: function (s) {
                     this.innerHTML = s;
                 }
             }
@@ -144,7 +143,7 @@
             temp = JSON.parse(temp)
 
             $.each(temp, function (id, name) {
-                $('#type').append("<option value="+ id+ ">" + name + "</option>");
+                $('#type').append("<option value=" + id + ">" + name + "</option>");
             });
         })
 
@@ -153,26 +152,30 @@
             temp = JSON.parse(temp)
 
             $.each(temp, function (id, name) {
-                $('#office').append("<option value="+ id+ ">" + name + "</option>");
-                $('#dropoffLocation').append("<option value="+ id+ ">" + name + "</option>");
-                $('#office').append("<option value="+ id+ ">" + name + "</option>");
+                $('#office').append("<option value=" + id + ">" + name + "</option>");
+                $('#dropoffLocation').append("<option value=" + id + ">" + name + "</option>");
+                $('#office').append("<option value=" + id + ">" + name + "</option>");
             });
         })
 
-        //search button here
-        $(".go").on("click",function () {
-            var officeId = $(this).attr("office");//
-            var carType = $(this).attr("type");//
+
+
+        document.getElementById("go").onclick = function () {
+
+            var officeId = document.getElementById("office").value
+            var carType =document.getElementById("type").value
 
             $.ajax({
                 type: 'post',
-                url: "/models",
-                data: {officeId: officeId, carType: carType},
+                url: "/api/vehicle/models",
+                data: {"officeId": officeId, "typeId": carType},
+
                 success: function (json) {
                     temp = json;
                     temp = JSON.parse(temp)
 
                     $.each(temp, function (key, value) {
+
                         $('#table').append("<tr id=" + "+ key + " + ">");
                         $.each(value, function (id, name) {
                             $('#table').append("<td>" + name + "</td>");
@@ -218,6 +221,7 @@
             }
         })
     }
+
 
 </script>
 

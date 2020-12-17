@@ -108,9 +108,9 @@ VALUES
 (100000, 0.80, '2019-11-22 19:10:25', '2021-11-22 19:10:25', '2020-11-22 19:10:25', '2020-11-22 19:10:25');
 
 INSERT INTO
-    rental_service("id", customer_id, dropoff_location, pickup_location, coupon_id, invoice_id, vehicle_id, daily_limit, pickup_date, dropoff_date, start_odometer, end_odometer, created_at, updated_at)
+    rental_service( customer_id, dropoff_id, pickup_id, coupon_id, invoice_id, vehicle_id, daily_limit, pickup_date, dropoff_date, start_odometer, end_odometer)
 VALUES
-(100000, 100000, 100000, 100000, 100000, 100000, 100000, 30, '2020-11-22 09:10:25', '2020-11-22 19:10:25', 10, 30, '2020-11-22 19:10:25','2020-11-22 19:10:25')
+( 100000, 100000, 100000, 100000, 100000, 100000, 30, '2020-11-22 09:10:25', '2020-11-22 19:10:25', 10, 30)
 
 
 -- CREATE TABLE public.coupon_customer (
