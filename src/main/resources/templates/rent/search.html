@@ -9,6 +9,11 @@
         body {font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;overflow-x: hidden;}
         header {text-align: center;background: #18BC9C;color: white;}
         header .container {padding-top: 100px;padding-bottom: 50px;}
+
+        td {border: 1px #DDD solid; padding: 5px; cursor: pointer;}
+        .selected {background-color: brown;color: #FFF;}
+
+
     </style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!--    <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>-->
@@ -46,10 +51,10 @@
     <div class="col-lg-4 col-lg-offset-4">
 
         <div class="row" style="margin-top: 10px;">
+            <form id="form">
             <div class="col-sm-6">
                 <span id="date_range"></span>
             </div>
-
 
             <div class="col-sm-6 input-group">
                 <select id="dropoffDate" name="dropoffDate" class="form-control" type="text" placeholder="Select Drop Off Date"/>
@@ -68,8 +73,8 @@
 
         <div class="row" style="margin-top: 10px;">
                 <div class="col-sm-6">
-                    <select  id="office" name ="pickupLocation" class="form-control" type="text" placeholder="Select Store Name"/>
-                    <option value="" hidden>Select Store Name</option>
+                    <select  id="office" name ="pickupLocation" class="form-control" type="text" placeholder="Select Pick Up Location"/>
+                    <option value="" hidden>Select Pick Up Location </option>
                     </select>
                 </div>
 
@@ -85,10 +90,12 @@
             </div>
 
             <div class="form-group" id="searchResult">
+                <table id="table">
+
+                </table>
             </div>
 
-
-            <div class="form-group" style="display: none">
+            <div class="form-group" id = "couponDiv" style="display: none">
                 <label for="coupon"  class="text-muted">Payment Method</label>
                 <select id="coupon" class="form-control" type="coupon" name="coupon" >
                     <option value="" hidden> Choose A Valid Coupon </option>
@@ -97,12 +104,12 @@
                     <option value="3">5.5%</option>
                     <option value="4">7%</option>
                 </select>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
 
+        </form>
     </div>
 </div>
-
-
 </body>
 
 
@@ -130,6 +137,7 @@
             }
         );
 
+
         <!--  TODO: get return value (office loaction and car Type for search) -->
         $.get(serverContext + "api/vehicle/models", function (json) {
             temp = json;
@@ -151,62 +159,62 @@
             });
         })
 
-
+        //search button here
         $(".go").on("click",function () {
-
             var officeId = $(this).attr("office");//
             var carType = $(this).attr("type");//
 
             $.ajax({
-                type:'post',
-                url:"/mopdels",
-                data:{officeId:officeId,carType:carType},
-                success:function (json) {
+                type: 'post',
+                url: "/models",
+                data: {officeId: officeId, carType: carType},
+                success: function (json) {
                     temp = json;
                     temp = JSON.parse(temp)
 
-                    $.each(temp, function (id, name){
-                        // $("#"+id).show().html(name);
-                        $('#searchResult').append(
-                            "<div className= 'form-group' >" +
-                            "<label for=" + " + id + "  + "className='text-muted'>" + id + "</label>" +
-                            "<span id=" + " + id + " + "class='alert alert-danger col-sm-4'>"+ name + "</span>" +
-                            "</div>"
-                        );
+                    $.each(temp, function (key, value) {
+                        $('#table').append("<tr id=" + "+ key + " + ">");
+                        $.each(value, function (id, name) {
+                            $('#table').append("<td>" + name + "</td>");
+                        });
+                        $('#table').append("</tr>");
                     });
+                    document.getElementById("couponDiv").style.display = "block";
                 }
             });
-
+        };
     });
 
-    <!--  TODO: send search condition -->
-    var id = $(this).attr("search");//
-    $.ajax({
-        type:'get',
-        url:"/payment",
-        data:{id:id},
-        success:function (json) {
-
-            temp = json;
-            temp = JSON.parse(temp)
-
-            $.each(temp, function (id, name) {
-                $("#amount").show().html(name);
-            });
-        }
+        //selected search
+    $("#table tr").click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+        $(this).siblings().css("color","#FDFDFD");
+        $(this).style.color = "#FF0303";
+        // var value=$(this).find('td:first').html();
+        // alert(value);
     });
-    });
+
+
+    // $('.ok').on('click', function(e){
+    //     alert($("#table tr.selected td:first").html());
+    // });
+
+
+    <!--  TODO: send back data -->
 
     function send(event){
         var formData= $('form').serialize();
-        $.post(serverContext + "rent",formData ,function(data){
 
+        var id = $("#table tr.selected").id;
+        formData["vehicleId"]  = id;
+
+        $.post(serverContext + "rent",formData ,function(data){
             var i = data.message.indexOf("#");
             var msg = data.message.substring(0,i);
             var invoiceID = data.message.substring(i+1);
 
             if(msg == "success"){
-                window.location.href = serverContext + "rent?invoice="+invoiceID;
+                window.location.href = serverContext + "rental?invoice="+invoiceID;
             }
         })
     }

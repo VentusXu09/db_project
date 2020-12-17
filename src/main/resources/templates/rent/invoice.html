@@ -46,66 +46,74 @@
 
 <!--            <div class="form-group">-->
 <!--                <label for="firstName" class="text-muted">First Name</label>-->
-<!--                <span id="firstName" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="firstName" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 <!--            <div class="form-group">-->
 <!--                <label for="lastName" class="text-muted">Last Name</label>-->
-<!--                <span id="lastName" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="lastName" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 <!--            <div class="form-group">-->
 <!--                <label for="address" class="text-muted">Address</label>-->
-<!--                <span id="address" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="address" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 <!--            <div class="form-group">-->
 <!--                <label for="amount" class="text-muted">Payment Amount</label>-->
-<!--                <span id="amount" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="amount" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 
 <!--            <div class="form-group">-->
 <!--                <label for="type" class="text-muted">Car Type</label>-->
-<!--                <span id="type" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="type" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 <!--            <div class="form-group">-->
 <!--                <label for="rent_charge" class="text-muted">Rent Charge</label>-->
-<!--                <span id="rent_charge" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="rent_charge" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 <!--            <div class="form-group">-->
 <!--                <label for="extra_charge" class="text-muted">Extra Charge</label>-->
-<!--                <span id="extra_charge" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="extra_charge" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 <!--            <div class="form-group">-->
 <!--                <label for="make" class="text-muted">Car Make</label>-->
-<!--                <span id="make" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="make" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 <!--            <div class="form-group">-->
 <!--                <label for="model" class="text-muted">Car Model</label>-->
-<!--                <span id="model" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="model" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 <!--            <div class="form-group">-->
 <!--                <label for="year" class="text-muted">Car Year</label>-->
-<!--                <span id="year" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="year" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 <!--            <div class="form-group">-->
 <!--                <label for="vin" class="text-muted">Car VIN</label>-->
-<!--                <span id="vin" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="vin" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
 
 <!--            <div class="form-group">-->
 <!--                <label for="license_plate_no" class="text-muted">License Plate No</label>-->
-<!--                <span id="license_plate_no" class="alert alert-danger col-sm-4" style="display:none;"></span>-->
+<!--                <span id="license_plate_no" class="col-sm-4" style="display:none;"></span>-->
 <!--            </div>-->
-
         </div>
+
+        <div class="container" style="padding-top: 10px;height: 300px;">
+            <form action="/choose">
+                <div>
+                    <button style="background:cornflowerblue">Return</button>
+                </div>
+            </form>
+        </div>
+
     </div>
 </div>
 
@@ -139,7 +147,7 @@
                     $('#thisPage').append(
                         "<div className= 'form-group' >" +
                         "<label for=" + " + id + "  + "className='text-muted'>" + id + "</label>" +
-                        "<span id=" + " + id + " + "class='alert alert-danger col-sm-4'>"+ name + "</span>" +
+                        "<span id=" + " + id + " + "class='col-sm-4'>"+ name + "</span>" +
                         "</div>"
                     );
                 });

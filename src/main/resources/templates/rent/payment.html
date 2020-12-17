@@ -43,18 +43,12 @@
     <div class="block-center">
         <div style="width: 60%;margin-left: 625px">
 
-            <div class="form-group">
-                <label for="amount" class="text-muted">Total Amount</label>
-                <span id="amount" class="alert alert-danger col-sm-4" style="display:none;" th:default="0"onchange="getAmount()"></span>
-            </div>
+<!--            <div class="form-group">-->
+<!--                <label for="amount" class="text-muted">Total Amount</label>-->
+<!--                <span id="amount" class="alert alert-danger col-sm-4" style="display:none;" th:default="0"onchange="getAmount()"></span>-->
+<!--            </div>-->
 
             <form action="/" method="POST" enctype="utf8" >
-<!--                <div class="form-group">-->
-<!--                    <label for="discount"  class="text-muted">Coupon</label>-->
-<!--                    <select id="discount" class="form-control" type="discount" name="discount" onchange="getAmount()">-->
-<!--                    <option value="" hidden> Choose A Valid Coupon </option>-->
-<!--                    </select>-->
-<!--                </div>-->
 
                 <div class="form-group">
                     <label for="pay_method"  class="text-muted">Payment Method</label>
@@ -78,6 +72,7 @@
                         <span id="pay_amount" name="pay_amount" style="display: none"></span>
                     </div>
                 </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
@@ -108,7 +103,7 @@
                 temp = JSON.parse(temp)
 
                 $.each(temp, function (id, name) {
-                    $("#amount").show().html(name);
+                    $("#pay_amount").show().html(name);
                 });
             }
         });
