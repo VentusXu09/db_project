@@ -31,10 +31,10 @@ public class RentalService extends BaseModel{
     @JoinColumn(name = "dropoff_location", referencedColumnName = "id", nullable = false)
     private OfficeLocation dropoff;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Double start_odometer;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Double end_odometer;
 
     @Column(nullable = false)

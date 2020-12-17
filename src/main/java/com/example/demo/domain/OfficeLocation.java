@@ -32,4 +32,15 @@ public class OfficeLocation extends BaseModel{
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "officeLocation", cascade = CascadeType.REMOVE)
     private List<Vehicle> vehicles= new ArrayList<>();
+
+    @Override
+    public String toString() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.getOfc_state())
+                .append(", ")
+                .append(this.getOfc_city())
+                .append(", ")
+                .append(this.getOfc_street_add());
+        return stringBuilder.toString();
+    }
 }

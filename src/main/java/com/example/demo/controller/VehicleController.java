@@ -4,7 +4,6 @@ import com.example.demo.domain.OfficeLocation;
 import com.example.demo.domain.Vehicle;
 import com.example.demo.domain.VehicleClass;
 import com.example.demo.domain.dto.VehicleDto;
-import com.example.demo.domain.support.State;
 import com.example.demo.repository.OfficeLocationRepository;
 import com.example.demo.repository.VehicleClassRepository;
 import com.example.demo.repository.VehicleRepository;
@@ -38,11 +37,6 @@ public class VehicleController {
     public String getVehicleModels() {
         List<Vehicle> vehicleList = vehicleRepository.findAll();
 
-        OfficeLocation office = officeLocationRepository.getOne((long) 100000);
-        VehicleClass type = vehicleClassRepository.getOne((long) 100001);
-        List<Vehicle> ress = vehicleRepository.findByOfficeLocationAndVehicleClass(office, type);
-
-
         HashMap<Long, String> types = new HashMap<>();
 
         for (Vehicle v: vehicleList
@@ -50,7 +44,6 @@ public class VehicleController {
             VehicleClass vehicleClass = v.getVehicleClass();
             types.put(vehicleClass.getId(), vehicleClass.getType());
         }
-        String n = State.NEW_YORK.getAbbreviation();
 
         String res = new Gson().toJson(types);
 
@@ -69,6 +62,7 @@ public class VehicleController {
             VehicleClass vehicleClass = v.getVehicleClass();
 
             Map<String, String> model = new HashMap<>();
+            model.put("id", v.getId().toString());
             model.put("model", v.getModel());
             model.put("make", v.getMake());
             model.put("year", v.getYear());
