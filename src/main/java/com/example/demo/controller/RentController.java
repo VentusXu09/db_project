@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.Invoice;
 import com.example.demo.domain.VehicleClass;
 import com.example.demo.domain.dto.UserDto;
 import com.example.demo.utils.GenericResponse;
@@ -22,16 +23,12 @@ public class RentController {
         return "rent/search";
     }
 
+    @RequestMapping("invoice/{id}")
+    public String invoice(final HttpServletRequest request, Model model, @PathVariable String id) {
+        Locale locale = request.getLocale();
+        model.addAttribute("lang", locale.getLanguage());
+        return "rent/invoice";
+    }
 
-    private VehicleClass model;
-
-//    @RequestMapping(value="/getModel",method= RequestMethod.POST)
-//    public @ResponseBody
-//    ArrayList<> xialacaidanPOST(HttpServletRequest request, HttpServletResponse response){
-//
-//        ArrayList<City> city =cityService.queryCity();
-//
-//        return city;
-//    }
 
 }
