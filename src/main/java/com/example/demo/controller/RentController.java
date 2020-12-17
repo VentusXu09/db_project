@@ -23,12 +23,18 @@ public class RentController {
         return "rent/search";
     }
 
-    @RequestMapping("invoice/{id}")
+    @GetMapping("invoice/{id}")
     public String invoice(final HttpServletRequest request, Model model, @PathVariable String id) {
         Locale locale = request.getLocale();
         model.addAttribute("lang", locale.getLanguage());
         return "rent/invoice";
     }
 
+    @RequestMapping("choose")
+    public String choose(final HttpServletRequest request, Model model) {
+        Locale locale = request.getLocale();
+        model.addAttribute("lang", locale.getLanguage());
+        return "users/choose";
+    }
 
 }
