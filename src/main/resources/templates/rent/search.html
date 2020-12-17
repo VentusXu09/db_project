@@ -3,14 +3,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <style>
         .password-verdict{ color:#000;}
-
         .navbar-custom {padding: 25px 0;-webkit-transition: padding .3s;-moz-transition: padding .3s;transition: padding .3s;}
         section {margin-top: 100px;height: 900px;}
         @media (max-width: 767px) {  section {padding: 75px 0;}  section.first {padding-top: 75px;}  }
         body {font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;overflow-x: hidden;}
         header {text-align: center;background: #18BC9C;color: white;}
         header .container {padding-top: 100px;padding-bottom: 50px;}
-
     </style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!--    <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>-->
@@ -100,7 +98,7 @@
             var msg = data.message.substring(0,i);
             var invoiceID = data.message.substring(i+1);
             if(msg == "success"){
-                window.location.href = serverContext + "invoice"+invoiceID;
+                window.location.href = serverContext + "?invoice="+invoiceID;
             }
 
         })
