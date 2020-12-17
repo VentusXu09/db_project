@@ -6,7 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PaymentDto {
-    private String invoiceId;
+
+    private String customerName;
 
     private String paymMethod;
 

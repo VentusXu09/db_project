@@ -44,12 +44,14 @@ public class RentController {
         return "rent/payment";
     }
 
-    @RequestMapping("invoice")
+    @RequestMapping("rent")
     public String invoice(final HttpServletRequest request, Model model) {
         Locale locale = request.getLocale();
         model.addAttribute("lang", locale.getLanguage());
         return "rent/invoice";
     }
+
+
 
 
 

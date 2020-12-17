@@ -58,7 +58,7 @@
 
                 <div class="form-group">
                     <label for="pay_method"  class="text-muted">Payment Method</label>
-                    <select id="pay_method" class="form-control" type="pay_method" name="pay_method" required="required">
+                    <select id="pay_method" class="form-control" type="pay_method" name="payMethod" required="required">
                         <option value="" hidden> Choose Payment Method </option>
                         <option value="1">Credit</option>
                         <option value="2">Debit</option>
@@ -67,7 +67,7 @@
 
                 <div class="form-group">
                     <label for="card_num" class="text-muted">First Name </label>
-                    <input id="card_num" class="form-control" name="card_num" placeholder="Card Number" required="required"/>
+                    <input id="card_num" class="form-control" name="cardNum" placeholder="card Number" required="required"/>
                     <span class="fa fa-user form-control-feedback text-muted"></span>
                 </div>
 
@@ -117,6 +117,9 @@
 
     function send(event){
         var formData= $('form').serialize();
+        var id = $(this).attr("username");//
+
+        formData["customerName"]  = id;
         $.post(serverContext + "/payment",formData ,function(data){
             var i = data.message.indexOf("#");
             var msg = data.message.substring(0,i);
@@ -126,21 +129,6 @@
             }
         })
     }
-
-    // function getAmount(){
-    //     var amount=$("#amount").val();
-    //     var  discount = $("#discount").val();
-    //
-    //     if(!discount){
-    //         $("#pay_amount").show().html(amount);
-    //     }else{
-    //         $("#pay_amount").show().html(amount*discount);
-    //     }
-    //
-    //
-    //
-    // };
-
 
 
 

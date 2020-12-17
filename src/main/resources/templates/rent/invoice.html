@@ -119,7 +119,11 @@
     $(document).ready(function () {
 
         <!--  TODO: get return value (user first/last name, address, payment amount, car Info) -->
-        var id = $(this).attr("username");//
+        const queryString = window.location.search;
+        // const queryString = "wd=git%20hub%20merge&rsv_spt=1&rsv_iqid=0xecb9585d000c5982&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&rqlang=cn&tn=baiduhome_pg&rsv_dl=tb&oq=git%2520hub%2520pull&rsv_enter=1&rsv_btype=t&inputT=580&rsv_t=8ed9MEGTFyQv1c5pBcO8v5N33Xj2sraBbKXH3JEefPQyembltS6b0AnHDzHRcq4bnza1&rsv_sug3=29&rsv_sug1=4&rsv_sug7=100&rsv_pq=a486cd65000ca9be&rsv_sug2=0&rsv_sug4=1180"
+        const urlParams = new URLSearchParams(queryString);
+
+        var id = urlParams.get("invoice");
         $.ajax({
             type:'get',
             url:"/inovice",

@@ -13,6 +13,10 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!--    <script type="text/javascript" th:src="@{/js/pwstrength.js}"></script>-->
     <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
+    <link rel="stylesheet" href="js/daterangepicker.min.css">
+    <script type="text/javascript" src="moment.min.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.daterangepicker.min.js"></script>
     <title>Registration Form</title>
 </head>
 <body>
@@ -40,15 +44,38 @@
 <!--search bar-->
 <div class="row">
     <div class="col-lg-4 col-lg-offset-4">
-            <div class="row" style="margin-top: 10px;">
+
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-6">
+                <span id="date_range"></span>
+            </div>
+
+
+            <div class="col-sm-6 input-group">
+                <select id="dropoffDate" name="dropoffDate" class="form-control" type="text" placeholder="Select Drop Off Date"/>
+                <option value="" hidden="">Select Drop Off Datee</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 input-group">
+                <select id="dropoffLocation" name="dropoffLocation" class="form-control" type="text" placeholder="Select Drop Off Location"/>
+                <option value="" hidden="">Select Drop Off Location</option>
+                </select>
+            </div>
+
+        </div>
+
+
+        <div class="row" style="margin-top: 10px;">
                 <div class="col-sm-6">
-                    <select  id="office" class="form-control" type="text" placeholder="Select Store Name"/>
+                    <select  id="office" name ="pickupLocation" class="form-control" type="text" placeholder="Select Store Name"/>
                     <option value="" hidden>Select Store Name</option>
                     </select>
                 </div>
 
+
                 <div class="col-sm-6 input-group">
-                    <select id="type" class="form-control" type="text" placeholder="Select Car Model"/>
+                    <select id="type" name="type" class="form-control" type="text" placeholder="Select Car Model"/>
                     <option value="" hidden="">Select Car Type</option>
                     </select>
                     <span class="input-group-btn">
@@ -59,8 +86,6 @@
 
             <div class="form-group" id="searchResult">
             </div>
-
-
 
 
             <div class="form-group" style="display: none">
@@ -93,6 +118,18 @@
             send(event);
         });
 
+        $(dom).data('#date_range').dateRangePicker(
+            {
+                getValue: function() {
+                    return this.innerHTML;
+                },
+                setValue: function(s)
+                {
+                    this.innerHTML = s;
+                }
+            }
+        );
+
         <!--  TODO: get return value (office loaction and car Type for search) -->
         $.get(serverContext + "api/vehicle/models", function (json) {
             temp = json;
@@ -108,7 +145,9 @@
             temp = JSON.parse(temp)
 
             $.each(temp, function (id, name) {
-                $('#type').append("<option value="+ id+ ">" + name + "</option>");
+                $('#office').append("<option value="+ id+ ">" + name + "</option>");
+                $('#dropoffLocation').append("<option value="+ id+ ">" + name + "</option>");
+                $('#office').append("<option value="+ id+ ">" + name + "</option>");
             });
         })
 
@@ -119,8 +158,8 @@
             var carType = $(this).attr("type");//
 
             $.ajax({
-                type:'get',
-                url:"/xxxx",
+                type:'post',
+                url:"/mopdels",
                 data:{officeId:officeId,carType:carType},
                 success:function (json) {
                     temp = json;
@@ -158,17 +197,16 @@
     });
     });
 
-
     function send(event){
         var formData= $('form').serialize();
-        $.post(serverContext + "xxxx",formData ,function(data){
+        $.post(serverContext + "rent",formData ,function(data){
 
             var i = data.message.indexOf("#");
             var msg = data.message.substring(0,i);
             var invoiceID = data.message.substring(i+1);
 
             if(msg == "success"){
-                window.location.href = serverContext + "?invoice="+invoiceID;
+                window.location.href = serverContext + "rent?invoice="+invoiceID;
             }
         })
     }
